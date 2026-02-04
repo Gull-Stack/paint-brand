@@ -48,13 +48,13 @@ export default function HomePage() {
             className="w-full h-full object-cover"
           />
           
-          {/* Wall-only color layer - masked to only affect walls */}
+          {/* Wall-only color layer - solid color base */}
           <div 
             className="absolute inset-0 wall-transition"
             style={{ 
               backgroundColor: selectedColor.hex,
-              mixBlendMode: 'multiply',
-              opacity: 0.6,
+              mixBlendMode: 'overlay',
+              opacity: 0.85,
               maskImage: 'url(/room-wall-mask.png)',
               WebkitMaskImage: 'url(/room-wall-mask.png)',
               maskSize: 'cover',
@@ -63,13 +63,28 @@ export default function HomePage() {
               WebkitMaskPosition: 'center',
             }}
           />
-          {/* Second color layer for intensity - also masked */}
+          {/* Second layer - punchy color saturation */}
           <div 
             className="absolute inset-0 wall-transition"
             style={{ 
               backgroundColor: selectedColor.hex,
               mixBlendMode: 'color',
-              opacity: 0.4,
+              opacity: 0.75,
+              maskImage: 'url(/room-wall-mask.png)',
+              WebkitMaskImage: 'url(/room-wall-mask.png)',
+              maskSize: 'cover',
+              WebkitMaskSize: 'cover',
+              maskPosition: 'center',
+              WebkitMaskPosition: 'center',
+            }}
+          />
+          {/* Third layer - multiply for depth/shadows */}
+          <div 
+            className="absolute inset-0 wall-transition"
+            style={{ 
+              backgroundColor: selectedColor.hex,
+              mixBlendMode: 'multiply',
+              opacity: 0.3,
               maskImage: 'url(/room-wall-mask.png)',
               WebkitMaskImage: 'url(/room-wall-mask.png)',
               maskSize: 'cover',
