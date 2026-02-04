@@ -37,37 +37,58 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero - Interactive Wall */}
-      <section 
-        className="min-h-screen pt-16 wall-transition relative overflow-hidden"
-        style={{ backgroundColor: selectedColor.hex }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
+      {/* Hero - Interactive Room with Color-Changing Wall */}
+      <section className="min-h-screen pt-16 relative overflow-hidden">
+        {/* Room Background Image */}
+        <div className="absolute inset-0">
+          <img 
+            src="/room-bg.jpg" 
+            alt="Living room" 
+            className="w-full h-full object-cover"
+          />
+          {/* Color Overlay - blends with the wall while preserving furniture shadows */}
+          <div 
+            className="absolute inset-0 wall-transition"
+            style={{ 
+              backgroundColor: selectedColor.hex,
+              mixBlendMode: 'multiply',
+              opacity: 0.35
+            }}
+          />
+          {/* Second overlay for more color intensity on lighter walls */}
+          <div 
+            className="absolute inset-0 wall-transition"
+            style={{ 
+              backgroundColor: selectedColor.hex,
+              mixBlendMode: 'color',
+              opacity: 0.5
+            }}
+          />
+          {/* Gradient fade for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Copy */}
             <div className="relative z-10">
-              <span className="inline-block px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
+              <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
                 ✨ Founded by creators, for creators
               </span>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-text-primary mb-6 leading-tight"
-                  style={{ 
-                    color: isLightColor(selectedColor.hex) ? '#2D2A26' : '#FFFFFF',
-                    mixBlendMode: 'normal'
-                  }}>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight drop-shadow-lg">
                 Paint that<br />
                 <span className="font-medium">speaks to you</span>
               </h1>
-              <p className="text-lg md:text-xl mb-8 max-w-lg"
-                 style={{ color: isLightColor(selectedColor.hex) ? '#6B6560' : 'rgba(255,255,255,0.85)' }}>
+              <p className="text-lg md:text-xl mb-8 max-w-lg text-white/90 drop-shadow">
                 64 designer-curated colors. Zero VOC. Premium quality.<br />
                 <strong>4 gallons shipped anywhere for $125.</strong>
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
+                <a href="#colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
                   Shop Colors
                   <ChevronRight className="w-4 h-4" />
                 </a>
-                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/80 backdrop-blur-sm text-text-primary font-medium rounded-full hover:bg-white transition-colors">
+                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
                   <Sparkles className="w-4 h-4" />
                   Take the Color Quiz
                 </button>
@@ -76,7 +97,7 @@ export default function HomePage() {
 
             {/* Right - Color Preview Card */}
             <div className="relative">
-              <div className="bg-white rounded-3xl p-8 shadow-soft max-w-md mx-auto lg:ml-auto">
+              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-sm mx-auto lg:ml-auto">
                 <div className="text-center mb-6">
                   <p className="text-sm text-text-muted mb-2">Currently viewing</p>
                   <h3 className="text-2xl font-medium text-text-primary">{selectedColor.name}</h3>
@@ -85,7 +106,7 @@ export default function HomePage() {
                 
                 {/* Color Swatch */}
                 <div 
-                  className="w-full aspect-square rounded-2xl mb-6 shadow-inner"
+                  className="w-full aspect-square rounded-2xl mb-6 shadow-inner wall-transition"
                   style={{ backgroundColor: selectedColor.hex }}
                 />
                 
@@ -108,7 +129,7 @@ export default function HomePage() {
         </div>
         
         {/* Floating Color Picker */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white rounded-full px-4 py-3 shadow-lg flex items-center gap-2 max-w-[90vw] overflow-x-auto">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-xl flex items-center gap-2 max-w-[90vw] overflow-x-auto z-20">
           {PAINT_COLORS.slice(0, 12).map((color) => (
             <button
               key={color.id}
