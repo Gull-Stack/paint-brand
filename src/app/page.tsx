@@ -41,29 +41,44 @@ export default function HomePage() {
       <section className="min-h-screen pt-16 relative overflow-hidden">
         {/* Room Background Image */}
         <div className="absolute inset-0">
+          {/* Base room photo - untouched */}
           <img 
             src="/room-bg.jpg" 
             alt="Living room" 
             className="w-full h-full object-cover"
           />
-          {/* Color Overlay - blends with the wall while preserving furniture shadows */}
+          
+          {/* Wall-only color layer - masked to only affect walls */}
           <div 
             className="absolute inset-0 wall-transition"
             style={{ 
               backgroundColor: selectedColor.hex,
               mixBlendMode: 'multiply',
-              opacity: 0.35
+              opacity: 0.6,
+              maskImage: 'url(/room-wall-mask.png)',
+              WebkitMaskImage: 'url(/room-wall-mask.png)',
+              maskSize: 'cover',
+              WebkitMaskSize: 'cover',
+              maskPosition: 'center',
+              WebkitMaskPosition: 'center',
             }}
           />
-          {/* Second overlay for more color intensity on lighter walls */}
+          {/* Second color layer for intensity - also masked */}
           <div 
             className="absolute inset-0 wall-transition"
             style={{ 
               backgroundColor: selectedColor.hex,
               mixBlendMode: 'color',
-              opacity: 0.5
+              opacity: 0.4,
+              maskImage: 'url(/room-wall-mask.png)',
+              WebkitMaskImage: 'url(/room-wall-mask.png)',
+              maskSize: 'cover',
+              WebkitMaskSize: 'cover',
+              maskPosition: 'center',
+              WebkitMaskPosition: 'center',
             }}
           />
+          
           {/* Gradient fade for text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
         </div>
