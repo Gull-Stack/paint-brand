@@ -1,18 +1,61 @@
 'use client'
 
 import { useState } from 'react'
-import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star } from 'lucide-react'
+import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
 import Link from 'next/link'
+import { useCart } from '@/context/CartContext'
 
 export default function HomePage() {
   const [selectedColor, setSelectedColor] = useState<PaintColor>(PAINT_COLORS[2]) // Soft Linen default
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [modalColor, setModalColor] = useState<PaintColor | null>(null)
+  const [justAdded, setJustAdded] = useState<string | null>(null)
+  const [favorites, setFavorites] = useState<string[]>([])
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+
+  const { addToCart } = useCart()
   
   const filteredColors = activeCategory 
     ? PAINT_COLORS.filter(c => c.category === activeCategory)
     : PAINT_COLORS
+
+  const categoryNames: { [key: string]: string } = {
+    whites: 'Whites',
+    neutrals: 'Neutrals', 
+    warm: 'Warm Neutrals',
+    blush: 'Blush & Pink',
+    greens: 'Greens',
+    blues: 'Blues',
+    moody: 'Moody'
+  }
+
+  const toggleFavorite = (colorId: string) => {
+    setFavorites(prev => 
+      prev.includes(colorId) 
+        ? prev.filter(id => id !== colorId)
+        : [...prev, colorId]
+    )
+  }
+
+  const handleAddToCart = (color: PaintColor) => {
+    addToCart(color)
+    setJustAdded(color.id)
+    setToastMessage(`${color.name} added to cart!`)
+    setShowToast(true)
+    
+    // Hide toast after 3 seconds
+    setTimeout(() => {
+      setShowToast(false)
+    }, 3000)
+    
+    // Reset "just added" state after 2 seconds
+    setTimeout(() => {
+      setJustAdded(null)
+    }, 2000)
+  }
 
   // Featured colors for the homepage
   const featuredColors = PAINT_COLORS.slice(0, 12)
@@ -188,13 +231,13 @@ export default function HomePage() {
         <div className="absolute bottom-8 left-0 right-0 bg-white/95 backdrop-blur-sm rounded-full mx-4 py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-20 scrollbar-hide">
           <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Shop colors:</p>
           {PAINT_COLORS.map((color) => (
-            <Link
+            <div
               key={color.id}
-              href={`/colors/${color.id}`}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
+              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 cursor-pointer ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
               style={{ backgroundColor: color.hex }}
               title={`Shop ${color.name}`}
               onMouseEnter={() => setSelectedColor(color)}
+              onClick={() => setModalColor(color)}
             />
           ))}
         </div>
@@ -517,6 +560,152 @@ export default function HomePage() {
       <button className="fixed bottom-6 right-6 w-14 h-14 bg-cta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-cta-hover transition-colors z-50">
         <MessageCircle className="w-6 h-6" />
       </button>
+
+      {/* Color Detail Modal */}
+      {modalColor && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-8">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-3xl font-light text-text-primary mb-2">
+                    {modalColor.name}
+                  </h2>
+                  <p className="text-text-secondary">
+                    {categoryNames[modalColor.category]}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setModalColor(null)
+                    setJustAdded(null)
+                  }}
+                  className="w-8 h-8 rounded-full bg-border flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <div 
+                    className="aspect-square rounded-xl mb-4"
+                    style={{ backgroundColor: modalColor.hex }}
+                  />
+                  
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-text-muted">Hex Code:</span>
+                      <span className="text-text-primary font-medium">{modalColor.hex}</span>
+                    </div>
+                    {modalColor.pantone && (
+                      <div className="flex justify-between">
+                        <span className="text-text-muted">Pantone:</span>
+                        <span className="text-text-primary font-medium">{modalColor.pantone}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between">
+                      <span className="text-text-muted">Category:</span>
+                      <span className="text-text-primary font-medium">
+                        {categoryNames[modalColor.category]}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-text-muted">Quantity:</span>
+                      <span className="text-text-primary font-medium">4 gallons</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium text-text-primary mb-4">Perfect for</h3>
+                  <div className="space-y-3 text-sm text-text-secondary mb-6">
+                    {modalColor.category === 'whites' && (
+                      <>
+                        <p>• Bright, airy spaces that feel fresh and clean</p>
+                        <p>• Creating a neutral backdrop for colorful decor</p>
+                        <p>• Small rooms that need to feel larger</p>
+                      </>
+                    )}
+                    {modalColor.category === 'neutrals' && (
+                      <>
+                        <p>• Cozy living rooms with a sophisticated feel</p>
+                        <p>• Bedrooms that need warmth and comfort</p>
+                        <p>• Spaces with lots of natural wood elements</p>
+                      </>
+                    )}
+                    {modalColor.category === 'warm' && (
+                      <>
+                        <p>• Cozy living rooms with a sophisticated feel</p>
+                        <p>• Bedrooms that need warmth and comfort</p>
+                        <p>• Spaces with lots of natural wood elements</p>
+                      </>
+                    )}
+                    {modalColor.category === 'blush' && (
+                      <>
+                        <p>• Nurseries and children's bedrooms</p>
+                        <p>• Romantic, feminine spaces</p>
+                        <p>• Accent walls in neutral rooms</p>
+                      </>
+                    )}
+                    {(modalColor.category === 'greens' || modalColor.category === 'blues') && (
+                      <>
+                        <p>• Bathrooms and powder rooms</p>
+                        <p>• Bedrooms for a calming atmosphere</p>
+                        <p>• Home offices that need focus</p>
+                      </>
+                    )}
+                    {modalColor.category === 'moody' && (
+                      <>
+                        <p>• Dining rooms for intimate gatherings</p>
+                        <p>• Reading nooks and cozy corners</p>
+                        <p>• Statement walls in modern spaces</p>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    <button 
+                      onClick={() => handleAddToCart(modalColor)}
+                      className={`w-full px-6 py-3 rounded-full font-medium btn-primary transition-colors ${
+                        justAdded === modalColor.id
+                          ? 'bg-green-500 hover:bg-green-600 text-white'
+                          : 'bg-cta text-white'
+                      }`}
+                    >
+                      {justAdded === modalColor.id ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <CheckCircle className="w-4 h-4" />
+                          Added ✓
+                        </div>
+                      ) : (
+                        'Add Bundle - $125'
+                      )}
+                    </button>
+                    <button 
+                      onClick={() => toggleFavorite(modalColor.id)}
+                      className={`w-full px-6 py-3 rounded-full font-medium border transition-colors ${
+                        favorites.includes(modalColor.id)
+                          ? 'bg-accent text-white border-accent'
+                          : 'bg-bg-white text-text-primary border-border hover:border-accent'
+                      }`}
+                    >
+                      {favorites.includes(modalColor.id) ? 'Remove from Favorites' : 'Add to Favorites'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-20 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all">
+          {toastMessage}
+        </div>
+      )}
     </div>
   )
 }
