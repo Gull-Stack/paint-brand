@@ -508,6 +508,76 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Comparison Table */}
+      <section className="py-20 bg-bg-cream">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-light text-text-primary mb-4">How We Compare</h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Premium quality paint with designer curation and smart pricing. See how Dwell stacks up against other paint brands.
+            </p>
+          </div>
+
+          <div className="bg-bg-white rounded-2xl overflow-hidden shadow-lg">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left p-6 text-text-primary font-medium">Feature</th>
+                  <th className="text-center p-6 bg-accent text-white font-medium">Dwell</th>
+                  <th className="text-center p-6 text-text-secondary font-medium">Sherwin-Williams</th>
+                  <th className="text-center p-6 text-text-secondary font-medium">Clare</th>
+                  <th className="text-center p-6 text-text-secondary font-medium">Big Box Store</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border">
+                  <td className="p-6 text-text-primary font-medium">Price per gallon</td>
+                  <td className="text-center p-6 text-success font-semibold">$31.25</td>
+                  <td className="text-center p-6 text-text-secondary">$55-75</td>
+                  <td className="text-center p-6 text-text-secondary">$54</td>
+                  <td className="text-center p-6 text-text-secondary">$45-65</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-6 text-text-primary font-medium">Zero-VOC Formula</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">Limited</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-6 text-text-primary font-medium">Designer-Curated Colors</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">DIY Selection</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">DIY Selection</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-6 text-text-primary font-medium">Free Shipping</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">Store Pickup</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">Store Pickup</td>
+                </tr>
+                <tr className="border-b border-border">
+                  <td className="p-6 text-text-primary font-medium">Pantone Color Matching</td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
+                  <td className="text-center p-6 text-text-muted">Limited</td>
+                  <td className="text-center p-6 text-text-muted">Extra Cost</td>
+                </tr>
+                <tr>
+                  <td className="p-6 text-text-primary font-medium">Target Audience</td>
+                  <td className="text-center p-6 text-accent font-semibold">Design-Savvy Women</td>
+                  <td className="text-center p-6 text-text-secondary">Professionals</td>
+                  <td className="text-center p-6 text-text-secondary">Design-Focused</td>
+                  <td className="text-center p-6 text-text-secondary">DIY General</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 bg-cta text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">

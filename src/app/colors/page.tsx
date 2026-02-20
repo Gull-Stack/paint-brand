@@ -83,12 +83,25 @@ export default function ColorsPage() {
             </div>
             
             <h1 className="text-5xl font-light text-text-primary mb-6">
-              Designer-Curated Paint Colors
+              Premium Designer Paint Colors
             </h1>
-            <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-              Discover 64 carefully selected colors perfect for modern, design-savvy women. 
-              Each shade is crafted to complement today's most popular home decor styles.
+            <p className="text-xl text-text-secondary mb-6 leading-relaxed">
+              64 professionally curated colors for the modern home. Zero-VOC formula with guaranteed Pantone matching. Each 4-gallon bundle covers 1,200 sq ft and ships free to your door.
             </p>
+            <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-sm text-text-secondary">
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-2 h-2 bg-success rounded-full"></div>
+                <span>Zero-VOC Formula</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-2 h-2 bg-success rounded-full"></div>
+                <span>Pantone Matching</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-2 h-2 bg-success rounded-full"></div>
+                <span>Free Shipping</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

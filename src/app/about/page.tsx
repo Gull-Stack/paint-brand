@@ -72,8 +72,7 @@ export default function AboutPage() {
               Paint for the Modern Woman
             </h1>
             <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-              Founded by women, for women who want premium results without the premium price. 
-              We believe every woman deserves a beautifully painted home that reflects her style and values.
+              Professional-grade paint designed for design-savvy women who appreciate quality and smart value. We deliver the same premium results as leading brands, with curated colors and convenient delivery—all at prices that make sense for your budget.
             </p>
           </div>
         </div>
