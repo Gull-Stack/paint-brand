@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Search, Filter, Heart, ArrowRight, Palette, Eye, CheckCircle } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
@@ -491,6 +492,8 @@ export default function ColorsPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
 
       {/* Toast Notification */}
       {showToast && (

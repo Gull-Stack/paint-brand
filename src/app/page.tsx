@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 
@@ -505,56 +506,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-text-primary text-white py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-xl font-medium tracking-tight mb-4">
-                DWELL<span className="text-accent">.</span>
-              </div>
-              <p className="text-white/70 text-sm leading-relaxed">
-                Premium paint for design-savvy women who value style and smart spending.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-medium mb-4">Shop</h4>
-              <div className="space-y-2 text-sm">
-                <Link href="/shop/bundles" className="block text-white/70 hover:text-white">Paint Bundles</Link>
-                <Link href="/shop/supplies" className="block text-white/70 hover:text-white">Supplies</Link>
-                <Link href="/colors" className="block text-white/70 hover:text-white">All Colors</Link>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-medium mb-4">Inspiration</h4>
-              <div className="space-y-2 text-sm">
-                <Link href="/inspiration" className="block text-white/70 hover:text-white">Blog</Link>
-                <Link href="/gallery" className="block text-white/70 hover:text-white">Gallery</Link>
-                <Link href="/about" className="block text-white/70 hover:text-white">Our Story</Link>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-medium mb-4">Support</h4>
-              <div className="space-y-2 text-sm">
-                <Link href="/faq" className="block text-white/70 hover:text-white">FAQ</Link>
-                <Link href="/contact" className="block text-white/70 hover:text-white">Contact</Link>
-                <button className="text-white/70 hover:text-white">Chat with us</button>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-white/70 text-sm">© 2026 Dwell. All rights reserved.</p>
-            <div className="flex gap-6 text-sm text-white/70">
-              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-white">Terms of Service</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Floating Chat Button */}
       <button className="fixed bottom-6 right-6 w-14 h-14 bg-cta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-cta-hover transition-colors z-50">
