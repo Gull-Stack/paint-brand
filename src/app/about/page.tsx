@@ -1,5 +1,6 @@
 import { Heart, Shield, Leaf, Users, Award, Truck, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function AboutPage() {
@@ -338,6 +339,8 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }
