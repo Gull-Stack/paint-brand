@@ -34,9 +34,6 @@ export default function ColorsPage() {
     { id: 'nursery', name: 'Nursery', colors: ['cloud-nine', 'blush', 'ballet', 'petal', 'mint'] },
   ]
 
-  const [styleFilter, setStyleFilter] = useState<string | null>(null)
-  const [roomFilter, setRoomFilter] = useState<string | null>(null)
-
   const filteredColors = PAINT_COLORS.filter(color => {
     const matchesCategory = !activeCategory || color.category === activeCategory
     const matchesStyle = !styleFilter || styleFilters.find(s => s.id === styleFilter)?.colors.includes(color.id)
