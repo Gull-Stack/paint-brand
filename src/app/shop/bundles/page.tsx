@@ -10,8 +10,7 @@ export default function BundlesPage() {
       contents: '4 gallons of premium paint',
       price: '$125',
       coverage: '~1,200 sq ft',
-      savings: 'Free shipping',
-      popular: true
+      savings: 'Free shipping'
     },
     {
       name: 'Starter Kit',
@@ -94,13 +93,10 @@ export default function BundlesPage() {
                 </thead>
                 <tbody>
                   {bundles.map((bundle, index) => (
-                    <tr key={index} className={`border-t border-border ${bundle.popular ? 'bg-accent/5' : ''}`}>
+                    <tr key={index} className="border-t border-border">
                       <td className="p-6">
                         <div className="flex items-center gap-3">
                           <span className="font-medium text-text-primary">{bundle.name}</span>
-                          {bundle.popular && (
-                            <span className="bg-accent text-white text-xs px-2 py-1 rounded-full">Most Popular</span>
-                          )}
                         </div>
                       </td>
                       <td className="p-6 text-text-secondary text-sm">{bundle.contents}</td>
