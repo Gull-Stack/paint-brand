@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles } from 'lucide-react'
+import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
+import Header from '@/components/Header'
+import Link from 'next/link'
 
 export default function HomePage() {
   const [selectedColor, setSelectedColor] = useState<PaintColor>(PAINT_COLORS[2]) // Soft Linen default
@@ -12,30 +14,19 @@ export default function HomePage() {
     ? PAINT_COLORS.filter(c => c.category === activeCategory)
     : PAINT_COLORS
 
+  // Featured colors for the homepage
+  const featuredColors = PAINT_COLORS.slice(0, 12)
+
+  // Bestseller bundles
+  const bestsellers = [
+    { name: 'Soft Linen Bundle', price: '$125', colors: 4, coverage: '~1,200 sq ft', popular: true },
+    { name: 'Greige Collection', price: '$125', colors: 4, coverage: '~1,200 sq ft' },
+    { name: 'Blush & Pink Set', price: '$125', colors: 4, coverage: '~1,200 sq ft' },
+  ]
+
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-bg-cream/95 backdrop-blur-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="text-xl font-medium tracking-tight text-text-primary">
-            BRAND<span className="text-accent">.</span>
-          </a>
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#colors" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Shop Colors</a>
-            <a href="#about" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Our Story</a>
-            <a href="#how-it-works" className="text-sm text-text-secondary hover:text-text-primary transition-colors">How It Works</a>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors">
-              <MessageCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">Chat with us</span>
-            </button>
-            <button className="px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary">
-              Cart (0)
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero - Interactive Room with Color-Changing Wall */}
       <section className="min-h-screen pt-16 relative overflow-hidden">
@@ -44,11 +35,11 @@ export default function HomePage() {
           {/* Base room photo - untouched */}
           <img 
             src="/room-bg.jpg" 
-            alt="Living room" 
+            alt="Stylish living room interior" 
             className="w-full h-full object-cover"
           />
           
-          {/* Wall-only color layer - solid color base */}
+          {/* Wall-only color layer - triple blend for rich color depth */}
           <div 
             className="absolute inset-0 wall-transition"
             style={{ 
@@ -100,24 +91,52 @@ export default function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Copy */}
+            {/* Left - Hero Copy */}
             <div className="relative z-10">
               <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
-                ✨ Founded by creators, for creators
+                ✨ Elevate Your Home with Designer-Curated Paint
               </span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Paint that<br />
-                <span className="font-medium">speaks to you</span>
+                Premium Paint,<br />
+                <span className="font-medium">Smart Price</span>
               </h1>
               <p className="text-lg md:text-xl mb-8 max-w-lg text-white/90 drop-shadow">
-                64 designer-curated colors. Zero VOC. Premium quality.<br />
-                <strong>4 gallons shipped anywhere for $125.</strong>
+                Zero-VOC formula with Pantone matching. Transform your space with colors curated for design-savvy women who value style and smart spending.
               </p>
+              
+              {/* Key Value Props */}
+              <div className="grid sm:grid-cols-2 gap-3 mb-8">
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-sm">Zero-VOC Formula</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-sm">Pantone Matching</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-sm">Free Shipping</span>
+                </div>
+                <div className="flex items-center gap-3 text-white/90">
+                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                  <span className="text-sm">$125 for 4 Gallons</span>
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
-                  Shop Colors
+                <Link href="/colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
+                  Shop Curated Colors
                   <ChevronRight className="w-4 h-4" />
-                </a>
+                </Link>
                 <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
                   <Sparkles className="w-4 h-4" />
                   Take the Color Quiz
@@ -129,9 +148,12 @@ export default function HomePage() {
             <div className="relative">
               <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-sm mx-auto lg:ml-auto">
                 <div className="text-center mb-6">
-                  <p className="text-sm text-text-muted mb-2">Currently viewing</p>
+                  <p className="text-sm text-text-muted mb-2">See this color in the room</p>
                   <h3 className="text-2xl font-medium text-text-primary">{selectedColor.name}</h3>
                   <p className="text-sm text-text-muted mt-1">{selectedColor.hex.toUpperCase()}</p>
+                  {selectedColor.pantone && (
+                    <p className="text-xs text-text-muted">Pantone {selectedColor.pantone}</p>
+                  )}
                 </div>
                 
                 {/* Color Swatch */}
@@ -143,14 +165,18 @@ export default function HomePage() {
                 {/* Quick Add */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-text-secondary">4 Gallon Box</span>
+                    <span className="text-text-secondary">4 Gallon Bundle</span>
                     <span className="font-medium text-text-primary">$125</span>
                   </div>
-                  <button className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary">
-                    Add to Cart
-                  </button>
+                  <Link 
+                    href={`/colors/${selectedColor.id}`}
+                    className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary inline-flex items-center justify-center gap-2"
+                  >
+                    Shop This Color
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
                   <p className="text-xs text-center text-text-muted">
-                    Free shipping • Pantone match guaranteed
+                    Free shipping • Pantone match guaranteed • ~1,200 sq ft coverage
                   </p>
                 </div>
               </div>
@@ -160,18 +186,20 @@ export default function HomePage() {
         
         {/* Floating Color Picker */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-xl flex items-center gap-2 max-w-[90vw] overflow-x-auto z-20">
-          {PAINT_COLORS.slice(0, 12).map((color) => (
-            <button
+          <p className="text-xs text-text-muted whitespace-nowrap pr-2">Shop colors:</p>
+          {featuredColors.map((color) => (
+            <Link
               key={color.id}
-              onClick={() => setSelectedColor(color)}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 ${selectedColor.id === color.id ? 'active' : ''}`}
+              href={`/colors/${color.id}`}
+              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
               style={{ backgroundColor: color.hex }}
-              title={color.name}
+              title={`Shop ${color.name}`}
+              onMouseEnter={() => setSelectedColor(color)}
             />
           ))}
-          <a href="#colors" className="text-xs text-text-muted whitespace-nowrap pl-2">
-            +{PAINT_COLORS.length - 12} more
-          </a>
+          <Link href="/colors" className="text-xs text-accent font-medium whitespace-nowrap pl-2 hover:text-accent-dark transition-colors">
+            +{PAINT_COLORS.length - featuredColors.length} more →
+          </Link>
         </div>
       </section>
 
@@ -185,7 +213,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col items-center gap-2">
               <Truck className="w-6 h-6 text-accent" />
-              <span className="text-sm text-text-secondary">Free Shipping on 4 Gal</span>
+              <span className="text-sm text-text-secondary">Free Shipping on Bundles</span>
             </div>
             <div className="flex flex-col items-center gap-2">
               <Shield className="w-6 h-6 text-accent" />
@@ -199,8 +227,160 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Shop Colors */}
-      <section id="colors" className="py-20 bg-bg-cream">
+      {/* Our Bestsellers */}
+      <section className="py-20 bg-bg-cream">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-light text-text-primary mb-4">Our Bestsellers</h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Discover the paint bundles that design-loving women can't stop raving about
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {bestsellers.map((bundle, index) => (
+              <div key={index} className={`bg-bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow ${bundle.popular ? 'ring-2 ring-accent' : ''}`}>
+                {bundle.popular && (
+                  <div className="bg-accent text-white text-sm font-medium px-3 py-1 rounded-full w-fit mb-4">
+                    Most Popular
+                  </div>
+                )}
+                <div className="aspect-square bg-gradient-to-br from-accent-light to-accent rounded-xl mb-6 flex items-center justify-center">
+                  <div className="w-32 h-40 bg-white rounded-lg shadow-lg flex items-center justify-center">
+                    <span className="text-4xl">🪣</span>
+                  </div>
+                </div>
+                <h3 className="text-lg font-medium text-text-primary mb-2">{bundle.name}</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl font-light text-text-primary">{bundle.price}</span>
+                  <div className="text-right text-sm text-text-secondary">
+                    <div>{bundle.colors} gallons</div>
+                    <div>{bundle.coverage}</div>
+                  </div>
+                </div>
+                <button className="w-full py-3 bg-cta text-white rounded-full font-medium btn-primary">
+                  Choose Colors
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/shop" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
+              Shop All Bundles <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Transformations */}
+      <section className="py-20 bg-bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-light text-text-primary mb-4">Customer Transformations</h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Real women sharing their Dwell transformations
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: 'Sarah M.',
+                location: 'Target-Inspired Living Room', 
+                text: "I reached out to Dwell and transformed my living room with their Soft Linen bundle. The quality is amazing and it was so easy!",
+                colors: 'Soft Linen'
+              },
+              {
+                name: 'Jessica L.',
+                location: 'Modern Nursery',
+                text: "Zero-VOC paint was essential for my daughter's nursery. The soft pink accent wall is exactly what I envisioned.",
+                colors: 'Cloud Nine, Whisper Pink'
+              },
+              {
+                name: 'Amanda K.',
+                location: 'Coastal Kitchen',
+                text: "Much more affordable than what I was quoted at Sherwin-Williams, but the same beautiful finish. Love my sage green island!",
+                colors: 'Pearl, Sage Whisper'
+              }
+            ].map((review, index) => (
+              <div key={index} className="bg-bg-cream rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                <div className="aspect-[4/3] bg-gradient-to-br from-border to-border-light"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-1 mb-3">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="w-4 h-4 fill-accent text-accent" />
+                    ))}
+                  </div>
+                  <p className="text-text-secondary mb-4 text-sm leading-relaxed italic">
+                    "{review.text}"
+                  </p>
+                  <div className="text-sm">
+                    <div className="font-medium text-text-primary">{review.name}</div>
+                    <div className="text-text-muted">{review.location}</div>
+                    <div className="text-accent text-xs mt-1">Colors: {review.colors}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/gallery" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
+              View All Transformations <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Dwell? */}
+      <section className="py-20 bg-bg-cream">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-light text-text-primary mb-4">Why Dwell?</h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Premium like Clare, but more affordable. Quality like Sherwin-Williams, but curated for your style.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <Leaf className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Zero-VOC Formula</h3>
+              <p className="text-text-secondary text-sm">Safe for your family and the environment</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Curated Colors</h3>
+              <p className="text-text-secondary text-sm">64 designer-selected colors for modern homes</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <Truck className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Smart Pricing</h3>
+              <p className="text-text-secondary text-sm">$125 for 4 gallons with free shipping</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Premium Quality</h3>
+              <p className="text-text-secondary text-sm">Same quality as leading brands, better price</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Shop Colors Section */}
+      <section id="colors" className="py-20 bg-bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-text-primary mb-4">
@@ -218,7 +398,7 @@ export default function HomePage() {
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeCategory === null
                   ? 'bg-cta text-white'
-                  : 'bg-white text-text-secondary hover:bg-border-light'
+                  : 'bg-border text-text-secondary hover:bg-accent hover:text-white'
               }`}
             >
               All Colors
@@ -230,7 +410,7 @@ export default function HomePage() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   activeCategory === cat.id
                     ? 'bg-cta text-white'
-                    : 'bg-white text-text-secondary hover:bg-border-light'
+                    : 'bg-border text-text-secondary hover:bg-accent hover:text-white'
                 }`}
               >
                 {cat.name}
@@ -239,181 +419,26 @@ export default function HomePage() {
           </div>
 
           {/* Color Grid */}
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4">
-            {filteredColors.map((color) => (
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4 mb-12">
+            {filteredColors.slice(0, 40).map((color) => (
               <button
                 key={color.id}
                 onClick={() => setSelectedColor(color)}
                 className="group"
               >
                 <div
-                  className={`swatch aspect-square rounded-xl mb-2 ${selectedColor.id === color.id ? 'active' : ''}`}
+                  className={`swatch aspect-square rounded-xl mb-2 transition-all hover:scale-105 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
                   style={{ backgroundColor: color.hex }}
                 />
-                <p className="text-xs text-text-primary truncate">{color.name}</p>
+                <p className="text-xs text-text-primary truncate group-hover:text-accent transition-colors">{color.name}</p>
               </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Featured Products */}
-      <section className="py-20 bg-bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-light text-text-primary mb-4">
-              Ready to Ship <span className="font-medium">Bundles</span>
-            </h2>
-            <p className="text-text-secondary max-w-xl mx-auto">
-              Everything you need to transform your space. Premium paint, pro supplies.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Product 1 */}
-            <div className="product-card bg-bg-cream rounded-2xl overflow-hidden">
-              <div className="aspect-square bg-gradient-to-br from-[#9CAF88] to-[#7D9B76] flex items-center justify-center">
-                <div className="w-32 h-40 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                  <span className="text-4xl">🪣</span>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-medium text-text-primary mb-2">4 Gallon Box</h3>
-                <p className="text-sm text-text-secondary mb-4">
-                  Covers ~1,200 sq ft. Perfect for a room refresh.
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-medium text-text-primary">$125</span>
-                  <button className="px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary">
-                    Choose Color
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Product 2 */}
-            <div className="product-card bg-bg-cream rounded-2xl overflow-hidden">
-              <div className="aspect-square bg-gradient-to-br from-[#E8C4B8] to-[#D4A5A5] flex items-center justify-center">
-                <div className="flex gap-2">
-                  <div className="w-24 h-32 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                    <span className="text-3xl">🪣</span>
-                  </div>
-                  <div className="w-16 h-20 bg-white rounded-lg shadow-lg flex items-center justify-center self-end">
-                    <span className="text-xl">🖌️</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-medium text-text-primary mb-2">Starter Kit</h3>
-                <p className="text-sm text-text-secondary mb-4">
-                  4 gallons + premium brush set + roller kit. Save 15%.
-                </p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-2xl font-medium text-text-primary">$165</span>
-                    <span className="text-sm text-text-muted line-through ml-2">$195</span>
-                  </div>
-                  <button className="px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary">
-                    Choose Color
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Product 3 */}
-            <div className="product-card bg-bg-cream rounded-2xl overflow-hidden">
-              <div className="aspect-square bg-gradient-to-br from-[#B5D4E8] to-[#8BA8BD] flex items-center justify-center">
-                <div className="grid grid-cols-3 gap-2">
-                  {['#FAF8F5', '#C5BAA8', '#9CAF88', '#E8C4B8', '#B5D4E8', '#3A3A3A'].map((hex, i) => (
-                    <div key={i} className="w-10 h-10 rounded-lg shadow-md" style={{ backgroundColor: hex }} />
-                  ))}
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-medium text-text-primary mb-2">Swatch Kit</h3>
-                <p className="text-sm text-text-secondary mb-4">
-                  6 peel-and-stick swatches. Test before you commit.
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-medium text-text-primary">$15</span>
-                  <button className="px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary">
-                    Build Kit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-bg-cream">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-light text-text-primary mb-4">
-              Simple as <span className="font-medium">1, 2, 3</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white rounded-2xl shadow-soft flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-light text-text-primary">1</span>
-              </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Pick Your Color</h3>
-              <p className="text-sm text-text-secondary">
-                Browse our curated palette or send us a Pantone code. We'll match it perfectly.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white rounded-2xl shadow-soft flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-light text-text-primary">2</span>
-              </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">We Ship It</h3>
-              <p className="text-sm text-text-secondary">
-                4 gallons in a beautiful box, shipped free anywhere in the country.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white rounded-2xl shadow-soft flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-light text-text-primary">3</span>
-              </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Transform Your Space</h3>
-              <p className="text-sm text-text-secondary">
-                Premium coverage, zero VOC, stunning results. Questions? Chat with us anytime.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: 'Sarah M.', text: 'The color match was PERFECT. Sent them a Pantone and it arrived exactly right. So impressed.', color: 'Sage' },
-              { name: 'Jessica L.', text: 'Finally, a paint brand that gets it. Beautiful colors, easy process, and the chat support is so helpful.', color: 'Blush' },
-              { name: 'Amanda K.', text: '$125 for 4 gallons shipped?! And it\'s actually premium quality. Can\'t believe I used to overpay at the hardware store.', color: 'Greige' },
-            ].map((review, i) => (
-              <div key={i} className="bg-bg-cream rounded-2xl p-6">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <span key={j} className="text-accent">★</span>
-                  ))}
-                </div>
-                <p className="text-text-primary mb-4">"{review.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-accent-light rounded-full flex items-center justify-center text-sm font-medium text-accent-dark">
-                    {review.name[0]}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-text-primary">{review.name}</p>
-                    <p className="text-xs text-text-muted">Purchased {review.color}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="text-center">
+            <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
+              View All 64 Colors <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -425,55 +450,67 @@ export default function HomePage() {
             Ready to paint your <span className="font-medium">dream space</span>?
           </h2>
           <p className="text-white/80 mb-8 max-w-lg mx-auto">
-            64 colors. Premium quality. $125 shipped. No trips to the hardware store.
+            64 designer colors. Premium quality. $125 shipped. Transform your home with colors that speak to your style.
           </p>
-          <a href="#colors" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors">
-            Shop Colors
-            <ChevronRight className="w-4 h-4" />
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors">
+              Shop Colors
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+            <Link href="/inspiration" className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
+              Get Inspired
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-bg-cream py-12 border-t border-border">
+      <footer className="bg-text-primary text-white py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h4 className="text-lg font-medium text-text-primary mb-4">BRAND<span className="text-accent">.</span></h4>
-              <p className="text-sm text-text-secondary">
-                Premium paint, curated colors, delivered to your door.
+              <div className="text-xl font-medium tracking-tight mb-4">
+                DWELL<span className="text-accent">.</span>
+              </div>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Premium paint for design-savvy women who value style and smart spending.
               </p>
             </div>
+            
             <div>
-              <h5 className="text-sm font-medium text-text-primary mb-4">Shop</h5>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><a href="#" className="hover:text-text-primary">All Colors</a></li>
-                <li><a href="#" className="hover:text-text-primary">Swatch Kits</a></li>
-                <li><a href="#" className="hover:text-text-primary">Supplies</a></li>
-              </ul>
+              <h4 className="font-medium mb-4">Shop</h4>
+              <div className="space-y-2 text-sm">
+                <Link href="/shop/bundles" className="block text-white/70 hover:text-white">Paint Bundles</Link>
+                <Link href="/shop/supplies" className="block text-white/70 hover:text-white">Supplies</Link>
+                <Link href="/colors" className="block text-white/70 hover:text-white">All Colors</Link>
+              </div>
             </div>
+            
             <div>
-              <h5 className="text-sm font-medium text-text-primary mb-4">Help</h5>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><a href="#" className="hover:text-text-primary">Chat with Us</a></li>
-                <li><a href="#" className="hover:text-text-primary">FAQs</a></li>
-                <li><a href="#" className="hover:text-text-primary">Shipping</a></li>
-              </ul>
+              <h4 className="font-medium mb-4">Inspiration</h4>
+              <div className="space-y-2 text-sm">
+                <Link href="/inspiration" className="block text-white/70 hover:text-white">Blog</Link>
+                <Link href="/gallery" className="block text-white/70 hover:text-white">Gallery</Link>
+                <Link href="/about" className="block text-white/70 hover:text-white">Our Story</Link>
+              </div>
             </div>
+            
             <div>
-              <h5 className="text-sm font-medium text-text-primary mb-4">Company</h5>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><a href="#" className="hover:text-text-primary">Our Story</a></li>
-                <li><a href="#" className="hover:text-text-primary">Press</a></li>
-                <li><a href="#" className="hover:text-text-primary">Careers</a></li>
-              </ul>
+              <h4 className="font-medium mb-4">Support</h4>
+              <div className="space-y-2 text-sm">
+                <Link href="/faq" className="block text-white/70 hover:text-white">FAQ</Link>
+                <Link href="/contact" className="block text-white/70 hover:text-white">Contact</Link>
+                <button className="text-white/70 hover:text-white">Chat with us</button>
+              </div>
             </div>
           </div>
-          <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-text-muted">© 2026 Brand. All rights reserved.</p>
-            <div className="flex gap-6 text-sm text-text-muted">
-              <a href="#" className="hover:text-text-primary">Privacy</a>
-              <a href="#" className="hover:text-text-primary">Terms</a>
+          
+          <div className="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-white/70 text-sm">© 2026 Dwell. All rights reserved.</p>
+            <div className="flex gap-6 text-sm text-white/70">
+              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white">Terms of Service</Link>
             </div>
           </div>
         </div>
@@ -485,13 +522,4 @@ export default function HomePage() {
       </button>
     </div>
   )
-}
-
-// Helper function to determine if a color is light or dark
-function isLightColor(hex: string): boolean {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.5
 }
