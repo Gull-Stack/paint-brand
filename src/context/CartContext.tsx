@@ -20,7 +20,7 @@ interface CartContextType {
   cartCount: number
   isInCart: (colorId: string) => boolean
   getCartTotal: () => number
-  proceedToCheckout: (customerEmail?: string) => Promise<void>
+  proceedToCheckout: (customerEmail?: string, suppliesBundle?: boolean) => Promise<void>
   isCheckingOut: boolean
 }
 
@@ -90,7 +90,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return cartItems.reduce((total, item) => total + (item.quantity * 125), 0)
   }
 
-  const proceedToCheckout = async (customerEmail?: string) => {
+  const proceedToCheckout = async (customerEmail?: string, suppliesBundle?: boolean) => {
     if (cartItems.length === 0) return
     
     setIsCheckingOut(true)
@@ -103,6 +103,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({
           items: cartItems,
+          suppliesBundle,
           customerEmail,
         }),
       })

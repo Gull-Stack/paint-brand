@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: NextRequest) {
   try {
-    const { items, customerEmail } = await request.json()
+    const { items, suppliesBundle, customerEmail } = await request.json()
 
     // Transform cart items into Stripe line items
     const lineItems = items.map((item: any) => ({
@@ -27,6 +27,25 @@ export async function POST(request: NextRequest) {
       },
       quantity: item.quantity,
     }))
+
+    // Add supplies bundle if requested
+    if (suppliesBundle) {
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Professional Supplies Bundle',
+            description: 'Complete set of premium painting supplies: brushes, rollers, painter\'s tape, drop cloth, and paint tray. Everything you need for a professional finish.',
+            metadata: {
+              type: 'supplies',
+              bundle: 'professional'
+            },
+          },
+          unit_amount: 4000, // $40.00 in cents
+        },
+        quantity: 1,
+      })
+    }
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({

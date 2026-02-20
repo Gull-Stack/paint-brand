@@ -164,7 +164,7 @@ export default function ShopPage() {
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <button 
-                  onClick={() => proceedToCheckout()}
+                  onClick={() => proceedToCheckout(undefined, suppliesAdded)}
                   disabled={isCheckingOut}
                   className="px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
