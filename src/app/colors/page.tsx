@@ -284,6 +284,10 @@ export default function ColorsPage() {
                         {categoryNames[selectedColor.category]}
                       </span>
                     </div>
+                    <div className="flex justify-between">
+                      <span className="text-text-muted">Quantity:</span>
+                      <span className="text-text-primary font-medium">4 gallons</span>
+                    </div>
                   </div>
                 </div>
 
@@ -342,7 +346,7 @@ export default function ColorsPage() {
                           Added ✓
                         </div>
                       ) : (
-                        'Add to Cart'
+                        'Add Bundle - $125'
                       )}
                     </button>
                     <button 
