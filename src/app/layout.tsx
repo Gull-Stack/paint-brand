@@ -6,9 +6,9 @@ import { CartProvider } from '@/context/CartContext'
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600'] })
 
 export const metadata: Metadata = {
-  title: 'Premium Interior Paint | Curated Colors, Delivered',
-  description: 'Designer-curated paint colors for the modern home. Zero VOC, premium quality. 4 gallons shipped anywhere for $125. Pantone color matching guaranteed.',
-  keywords: 'interior paint, wall paint, premium paint, designer colors, eco-friendly paint, zero VOC',
+  title: 'Premium Interior Paint for Stylish Homes | Dwell',
+  description: 'Designer-curated, zero-VOC paint delivered to your door. 64 premium colors for modern homes. $125 for 4 gallons covering 1,200 sq ft. Free shipping, guaranteed Pantone matching.',
+  keywords: 'premium interior paint, designer paint colors, zero VOC paint, low odor paint, modern home decor, affordable designer paint, premium paint bundles, stylish home paint',
 }
 
 export default function RootLayout({

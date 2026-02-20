@@ -138,41 +138,53 @@ export default function HomePage() {
             {/* Left - Hero Copy */}
             <div className="relative z-10">
               <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
-                ✨ Elevate Your Home with Designer-Curated Paint
+                ✨ Designer-Curated Paint Collection
               </span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Premium Paint,<br />
-                <span className="font-medium">Smart Price</span>
+                Elevate Your Home<br />
+                <span className="font-medium">Premium Quality, Smart Price</span>
               </h1>
               <p className="text-lg md:text-xl mb-8 max-w-lg text-white/90 drop-shadow">
-                Zero-VOC formula with Pantone matching. Transform your space with colors curated for design-savvy women who value style and smart spending.
+                Professional-grade, zero-VOC paint with guaranteed Pantone matching. 64 designer-curated colors delivered in premium 4-gallon bundles—covering 1,200 sq ft for just $125.
               </p>
               
-              {/* Key Value Props */}
-              <div className="grid sm:grid-cols-2 gap-3 mb-8">
+              {/* Premium Value Props */}
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
                 <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-sm">Zero-VOC Formula</span>
+                  <div>
+                    <span className="text-sm font-medium">Zero-VOC Formula</span>
+                    <div className="text-xs text-white/70">Safe for family & pets</div>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-sm">Pantone Matching</span>
+                  <div>
+                    <span className="text-sm font-medium">Guaranteed Pantone Match</span>
+                    <div className="text-xs text-white/70">Professional color accuracy</div>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-sm">Free Shipping</span>
+                  <div>
+                    <span className="text-sm font-medium">Free Shipping</span>
+                    <div className="text-xs text-white/70">On all 4-gallon bundles</div>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-sm">$125 for 4 Gallons</span>
+                  <div>
+                    <span className="text-sm font-medium">Premium Coverage</span>
+                    <div className="text-xs text-white/70">1,200 sq ft per bundle</div>
+                  </div>
                 </div>
               </div>
 
@@ -392,7 +404,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-light text-text-primary mb-4">Why Dwell?</h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              Premium like Clare, but more affordable. Quality like Sherwin-Williams, but curated for your style.
+              Professional-grade paint with designer curation. Get the quality of premium brands like Clare and Sherwin-Williams, with the smart value and style-forward approach you love from Target and Crate & Barrel.
             </p>
           </div>
 
@@ -402,31 +414,31 @@ export default function HomePage() {
                 <Leaf className="w-8 h-8 text-accent" />
               </div>
               <h3 className="text-lg font-medium text-text-primary mb-2">Zero-VOC Formula</h3>
-              <p className="text-text-secondary text-sm">Safe for your family and the environment</p>
+              <p className="text-text-secondary text-sm">Premium, low-odor paint that's safe for nurseries, bedrooms, and family spaces. No harmful chemicals, no compromise on quality.</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
                 <Sparkles className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Curated Colors</h3>
-              <p className="text-text-secondary text-sm">64 designer-selected colors for modern homes</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Designer-Curated Palette</h3>
+              <p className="text-text-secondary text-sm">64 colors handpicked by interior designers for modern homes. No overwhelming choice—just the perfect shades for your style.</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Smart Pricing</h3>
-              <p className="text-text-secondary text-sm">$125 for 4 gallons with free shipping</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Smart Value Pricing</h3>
+              <p className="text-text-secondary text-sm">Premium paint at smart prices. $125 covers 1,200 sq ft—less than big box stores, delivered to your door.</p>
             </div>
             
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Premium Quality</h3>
-              <p className="text-text-secondary text-sm">Same quality as leading brands, better price</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Professional Quality</h3>
+              <p className="text-text-secondary text-sm">Guaranteed Pantone color matching and superior coverage. The same quality professionals use, made simple for your home.</p>
             </div>
           </div>
         </div>
@@ -437,10 +449,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-text-primary mb-4">
-              Shop Our <span className="font-medium">64 Colors</span>
+              Shop Our <span className="font-medium">64 Designer Colors</span>
             </h2>
             <p className="text-text-secondary max-w-xl mx-auto">
-              Every shade hand-picked by interior designers. Fewer choices, better results.
+              Premium low-VOC paint in colors curated by interior design professionals. Perfect for modern homes inspired by Target, Nordstrom, and Crate & Barrel aesthetics.
             </p>
           </div>
 
