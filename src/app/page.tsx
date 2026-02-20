@@ -484,7 +484,7 @@ export default function HomePage() {
 
           {/* Color Grid */}
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4 mb-12">
-            {filteredColors.slice(0, 40).map((color) => (
+            {filteredColors.map((color) => (
               <button
                 key={color.id}
                 onClick={() => setSelectedColor(color)}
@@ -501,7 +501,7 @@ export default function HomePage() {
 
           <div className="text-center">
             <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
-              View All 64 Colors <ArrowRight className="w-4 h-4" />
+              Shop These Colors <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
