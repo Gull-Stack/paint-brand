@@ -1,5 +1,6 @@
 import { Check, Truck, Leaf, Star, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function BundlesPage() {
@@ -256,6 +257,8 @@ export default function BundlesPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

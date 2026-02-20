@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Mail, Bell, Check } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { PAINT_COLORS } from '@/lib/colors'
 
 export default function SwatchesPage() {
@@ -216,6 +217,8 @@ export default function SwatchesPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

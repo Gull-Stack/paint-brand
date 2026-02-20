@@ -2,6 +2,7 @@
 
 import { Truck, Leaf, Shield, ArrowRight, Check, X, Plus, Minus } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 
@@ -270,6 +271,8 @@ export default function ShopPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

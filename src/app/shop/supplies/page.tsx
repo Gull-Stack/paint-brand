@@ -1,5 +1,6 @@
 import { Check, ArrowRight, Sparkles } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function SuppliesPage() {
@@ -80,13 +81,7 @@ export default function SuppliesPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {bundles.map((bundle, index) => (
-              <div key={index} className={`bg-bg-white rounded-2xl p-8 ${bundle.popular ? 'ring-2 ring-accent' : 'border border-border'}`}>
-                {bundle.popular && (
-                  <div className="bg-accent text-white text-sm font-medium px-3 py-1 rounded-full w-fit mb-4">
-                    Most Popular
-                  </div>
-                )}
-                
+              <div key={index} className="bg-bg-white rounded-2xl p-8 border border-border">
                 <h3 className="text-2xl font-light text-text-primary mb-3">{bundle.name}</h3>
                 <div className="flex items-baseline gap-3 mb-4">
                   <span className="text-3xl font-light text-text-primary">{bundle.price}</span>
@@ -243,6 +238,8 @@ export default function SuppliesPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }
