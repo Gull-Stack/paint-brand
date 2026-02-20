@@ -61,11 +61,11 @@ export default function HomePage() {
   // Featured colors for the homepage
   const featuredColors = PAINT_COLORS.slice(0, 12)
 
-  // Bestseller bundles
-  const bestsellers = [
-    { name: 'Soft Linen Bundle', price: '$125', colors: 4, coverage: '~1,200 sq ft', popular: true },
-    { name: 'Greige Collection', price: '$125', colors: 4, coverage: '~1,200 sq ft' },
-    { name: 'Blush & Pink Set', price: '$125', colors: 4, coverage: '~1,200 sq ft' },
+  // Featured bestseller colors  
+  const bestsellerColors = [
+    PAINT_COLORS.find(c => c.id === 'soft-linen')!,
+    PAINT_COLORS.find(c => c.id === 'driftwood')!,
+    PAINT_COLORS.find(c => c.id === 'sage')!,
   ]
 
   return (
@@ -274,41 +274,53 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-light text-text-primary mb-4">Our Bestsellers</h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              Discover the paint bundles that design-loving women can't stop raving about
+              The most loved colors by design-savvy women. Each bundle includes 4 gallons delivered to your door.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {bestsellers.map((bundle, index) => (
-              <div key={index} className={`bg-bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow ${bundle.popular ? 'ring-2 ring-accent' : ''}`}>
-                {bundle.popular && (
+            {bestsellerColors.map((color, index) => (
+              <div key={color.id} className={`bg-bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow ${index === 0 ? 'ring-2 ring-accent' : ''}`}>
+                {index === 0 && (
                   <div className="bg-accent text-white text-sm font-medium px-3 py-1 rounded-full w-fit mb-4">
                     Most Popular
                   </div>
                 )}
-                <div className="aspect-square bg-gradient-to-br from-accent-light to-accent rounded-xl mb-6 flex items-center justify-center">
-                  <div className="w-32 h-40 bg-white rounded-lg shadow-lg flex items-center justify-center">
-                    <span className="text-4xl">🪣</span>
-                  </div>
+                <div className="aspect-square rounded-xl mb-6 shadow-sm" style={{ backgroundColor: color.hex }}>
+                  <div className="w-full h-full rounded-xl bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
                 </div>
-                <h3 className="text-lg font-medium text-text-primary mb-2">{bundle.name}</h3>
+                <h3 className="text-lg font-medium text-text-primary mb-2">{color.name}</h3>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-light text-text-primary">{bundle.price}</span>
+                  <span className="text-2xl font-light text-text-primary">$125</span>
                   <div className="text-right text-sm text-text-secondary">
-                    <div>{bundle.colors} gallons</div>
-                    <div>{bundle.coverage}</div>
+                    <div>4 gallons</div>
+                    <div>~1,200 sq ft</div>
                   </div>
                 </div>
-                <button className="w-full py-3 bg-cta text-white rounded-full font-medium btn-primary">
-                  Choose Colors
+                <button 
+                  onClick={() => handleAddToCart(color)}
+                  className={`w-full py-3 rounded-full font-medium btn-primary transition-colors ${
+                    justAdded === color.id
+                      ? 'bg-green-500 hover:bg-green-600 text-white'
+                      : 'bg-cta text-white'
+                  }`}
+                >
+                  {justAdded === color.id ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <CheckCircle className="w-4 h-4" />
+                      Added ✓
+                    </div>
+                  ) : (
+                    'Add to Cart - $125'
+                  )}
                 </button>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/shop" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
-              Shop All Bundles <ArrowRight className="w-4 h-4" />
+            <Link href="/colors" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
+              Shop All 64 Colors <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
