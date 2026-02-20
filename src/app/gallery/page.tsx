@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Star, Filter, Heart, ArrowRight, Camera, MapPin } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function GalleryPage() {
@@ -353,6 +354,8 @@ export default function GalleryPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

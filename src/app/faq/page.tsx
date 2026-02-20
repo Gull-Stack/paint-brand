@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown, Search, MessageCircle, Truck, Shield, Leaf, Calculator } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default function FAQPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
@@ -331,6 +332,8 @@ export default function FAQPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { ArrowLeft, Heart, Share, Check, Plus, Minus, ShoppingBag, Palette, Eye, ArrowRight, Shield } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { PAINT_COLORS, type PaintColor } from '@/lib/colors'
 import { useCart } from '@/context/CartContext'
@@ -337,6 +338,8 @@ export default function ColorProductPage() {
           )}
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

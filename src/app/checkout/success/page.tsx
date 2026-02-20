@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Check, Truck, Palette, ArrowRight } from 'lucide-react'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 function SuccessContent() {
@@ -143,6 +144,8 @@ function SuccessContent() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   )
 }
