@@ -51,18 +51,9 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors">
-            <MessageCircle className="w-4 h-4" />
-            <span className="hidden sm:inline">Chat with us</span>
-          </button>
-          <Link href="/shop" className="relative px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary flex items-center gap-2">
+          <Link href="/shop" className="px-4 py-2 bg-cta text-white text-sm font-medium rounded-full btn-primary flex items-center gap-2">
             <ShoppingCart className="w-4 h-4" />
             <span>Cart ({cartCount})</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
           </Link>
           
           {/* Mobile menu button */}
