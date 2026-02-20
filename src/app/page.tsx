@@ -246,11 +246,10 @@ export default function HomePage() {
           {PAINT_COLORS.map((color) => (
             <div
               key={color.id}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 cursor-pointer ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
+              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
               style={{ backgroundColor: color.hex }}
-              title={`Shop ${color.name}`}
+              title={`Preview ${color.name}`}
               onMouseEnter={() => setSelectedColor(color)}
-              onClick={() => setModalColor(color)}
             />
           ))}
         </div>
