@@ -185,9 +185,9 @@ export default function HomePage() {
         </div>
         
         {/* Floating Color Picker */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-xl flex items-center gap-2 max-w-[90vw] overflow-x-auto z-20">
-          <p className="text-xs text-text-muted whitespace-nowrap pr-2">Shop colors:</p>
-          {featuredColors.map((color) => (
+        <div className="absolute bottom-8 left-0 right-0 bg-white/95 backdrop-blur-sm rounded-full mx-4 py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-20 scrollbar-hide">
+          <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Shop colors:</p>
+          {PAINT_COLORS.map((color) => (
             <Link
               key={color.id}
               href={`/colors/${color.id}`}
@@ -197,9 +197,6 @@ export default function HomePage() {
               onMouseEnter={() => setSelectedColor(color)}
             />
           ))}
-          <Link href="/colors" className="text-xs text-accent font-medium whitespace-nowrap pl-2 hover:text-accent-dark transition-colors">
-            +{PAINT_COLORS.length - featuredColors.length} more →
-          </Link>
         </div>
       </section>
 
