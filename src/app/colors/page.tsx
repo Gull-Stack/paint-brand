@@ -16,16 +16,36 @@ export default function ColorsPage() {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [justAdded, setJustAdded] = useState<string | null>(null)
+  const [styleFilter, setStyleFilter] = useState<string | null>(null)
+  const [roomFilter, setRoomFilter] = useState<string | null>(null)
 
   const { addToCart, isInCart } = useCart()
 
+  const styleFilters = [
+    { id: 'nordstrom-chic', name: 'Nordstrom Chic', colors: ['soft-linen', 'greige', 'almond', 'pearl'] },
+    { id: 'target-cozy', name: 'Target Cozy', colors: ['driftwood', 'cashmere', 'sage', 'blush'] },
+    { id: 'crate-barrel', name: 'Crate & Barrel Modern', colors: ['cloud-nine', 'mushroom', 'eucalyptus', 'stone'] },
+  ]
+
+  const roomFilters = [
+    { id: 'bedroom', name: 'Bedroom', colors: ['soft-linen', 'blush', 'sage', 'pearl', 'whisper'] },
+    { id: 'kitchen', name: 'Kitchen', colors: ['swiss-coffee', 'greige', 'almond', 'stone'] },
+    { id: 'living-room', name: 'Living Room', colors: ['driftwood', 'cashmere', 'mushroom', 'eucalyptus'] },
+    { id: 'nursery', name: 'Nursery', colors: ['cloud-nine', 'blush', 'ballet', 'petal', 'mint'] },
+  ]
+
+  const [styleFilter, setStyleFilter] = useState<string | null>(null)
+  const [roomFilter, setRoomFilter] = useState<string | null>(null)
+
   const filteredColors = PAINT_COLORS.filter(color => {
     const matchesCategory = !activeCategory || color.category === activeCategory
+    const matchesStyle = !styleFilter || styleFilters.find(s => s.id === styleFilter)?.colors.includes(color.id)
+    const matchesRoom = !roomFilter || roomFilters.find(r => r.id === roomFilter)?.colors.includes(color.id)
     const matchesSearch = !searchQuery || 
       color.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       color.hex.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (color.pantone && color.pantone.toLowerCase().includes(searchQuery.toLowerCase()))
-    return matchesCategory && matchesSearch
+    return matchesCategory && matchesStyle && matchesRoom && matchesSearch
   })
 
   const toggleFavorite = (colorId: string) => {
@@ -153,10 +173,77 @@ export default function ColorsPage() {
               </div>
             </div>
 
+            {/* Style & Room Filters */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <div className="flex flex-col md:flex-row gap-4">
+                {/* Style Filters */}
+                <div className="flex-1">
+                  <label className="text-xs font-medium text-text-muted uppercase tracking-wider mb-2 block">Style Inspiration</label>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setStyleFilter(null)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                        !styleFilter 
+                          ? 'bg-secondary text-white' 
+                          : 'bg-border-light text-text-secondary hover:bg-secondary hover:text-white'
+                      }`}
+                    >
+                      All Styles
+                    </button>
+                    {styleFilters.map((style) => (
+                      <button
+                        key={style.id}
+                        onClick={() => setStyleFilter(styleFilter === style.id ? null : style.id)}
+                        className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                          styleFilter === style.id
+                            ? 'bg-secondary text-white'
+                            : 'bg-border-light text-text-secondary hover:bg-secondary hover:text-white'
+                        }`}
+                      >
+                        {style.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Room Filters */}
+                <div className="flex-1">
+                  <label className="text-xs font-medium text-text-muted uppercase tracking-wider mb-2 block">Room Type</label>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setRoomFilter(null)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                        !roomFilter 
+                          ? 'bg-secondary text-white' 
+                          : 'bg-border-light text-text-secondary hover:bg-secondary hover:text-white'
+                      }`}
+                    >
+                      All Rooms
+                    </button>
+                    {roomFilters.map((room) => (
+                      <button
+                        key={room.id}
+                        onClick={() => setRoomFilter(roomFilter === room.id ? null : room.id)}
+                        className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                          roomFilter === room.id
+                            ? 'bg-secondary text-white'
+                            : 'bg-border-light text-text-secondary hover:bg-secondary hover:text-white'
+                        }`}
+                      >
+                        {room.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Results count */}
             <div className="mt-4 text-sm text-text-muted">
               Showing {filteredColors.length} of {PAINT_COLORS.length} colors
               {activeCategory && ` in ${categoryNames[activeCategory as keyof typeof categoryNames]}`}
+              {styleFilter && ` • ${styleFilters.find(s => s.id === styleFilter)?.name} style`}
+              {roomFilter && ` • ${roomFilters.find(r => r.id === roomFilter)?.name}`}
             </div>
           </div>
         </div>
