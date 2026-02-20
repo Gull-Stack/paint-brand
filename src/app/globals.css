@@ -139,3 +139,16 @@ input:focus, select:focus, textarea:focus {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
 }
+
+/* GullStack footer credit styling */
+.gullstack-credit {
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.gullstack-credit:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
