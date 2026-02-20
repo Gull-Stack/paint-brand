@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Truck, Leaf, Shield, ArrowRight, Check, X, Plus, Minus } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -8,6 +9,10 @@ import { useCart } from '@/context/CartContext'
 
 export default function ShopPage() {
   const { cartItems, removeFromCart, clearCart, getCartTotal, cartCount, proceedToCheckout, isCheckingOut } = useCart()
+  const [suppliesAdded, setSuppliesAdded] = useState(false)
+  
+  const suppliesPrice = 40
+  const totalWithSupplies = getCartTotal() + (suppliesAdded ? suppliesPrice : 0)
 
   return (
     <div className="min-h-screen bg-bg-cream">
@@ -75,9 +80,85 @@ export default function ShopPage() {
                   <span className="text-text-secondary">Shipping:</span>
                   <span className="text-green-600 font-medium">FREE</span>
                 </div>
+                {suppliesAdded && (
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-text-secondary">Supplies Bundle:</span>
+                    <span className="text-text-primary">$40</span>
+                  </div>
+                )}
                 <div className="flex justify-between items-center text-xl font-medium pt-4 border-t border-border">
                   <span>Total:</span>
-                  <span>${getCartTotal()}</span>
+                  <span>${totalWithSupplies}</span>
+                </div>
+              </div>
+
+              {/* Supplies Upsell */}
+              <div className={`mt-8 p-6 rounded-xl border transition-colors ${
+                suppliesAdded 
+                  ? 'bg-success/5 border-success/20' 
+                  : 'bg-accent/5 border-accent/20'
+              }`}>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-lg font-medium text-text-primary mb-2">
+                      {suppliesAdded ? '✅ Complete Your Project' : '🎨 Complete Your Project'}
+                    </h3>
+                    <p className="text-sm text-text-secondary">
+                      {suppliesAdded 
+                        ? 'Professional supplies added to your order for the perfect finish.'
+                        : 'Add professional supplies for the perfect finish. Save 15% when bundled with paint.'
+                      }
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-medium text-text-primary">$40</div>
+                    <div className="text-xs text-text-muted line-through">$47</div>
+                    <div className="text-xs text-success font-medium">Save $7</div>
+                  </div>
+                </div>
+                
+                <div className="grid sm:grid-cols-2 gap-4 text-xs text-text-secondary mb-4">
+                  <div>
+                    <div className="font-medium text-text-primary mb-2">Brushes & Rollers</div>
+                    <ul className="space-y-1">
+                      <li>• Premium 2.5" angled brush</li>
+                      <li>• 9" microfiber roller cover</li>
+                      <li>• Roller frame & extension</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="font-medium text-text-primary mb-2">Prep & Protection</div>
+                    <ul className="space-y-1">
+                      <li>• Professional painter's tape</li>
+                      <li>• Paint tray with liners</li>
+                      <li>• Canvas drop cloth</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3">
+                  {suppliesAdded ? (
+                    <button 
+                      onClick={() => setSuppliesAdded(false)}
+                      className="px-6 py-2 bg-border text-text-secondary font-medium rounded-full hover:bg-border-dark transition-colors text-sm flex items-center gap-2"
+                    >
+                      <X className="w-4 h-4" />
+                      Remove Supplies
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => setSuppliesAdded(true)}
+                      className="px-6 py-2 bg-accent text-white font-medium rounded-full hover:bg-accent-dark transition-colors text-sm"
+                    >
+                      Add Supplies Bundle - $40
+                    </button>
+                  )}
+                  {suppliesAdded && (
+                    <div className="px-4 py-2 bg-success/10 text-success text-sm font-medium rounded-full flex items-center gap-2">
+                      <Check className="w-4 h-4" />
+                      Added to Order
+                    </div>
+                  )}
                 </div>
               </div>
 
