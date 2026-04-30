@@ -242,14 +242,19 @@ export default function HomePage() {
         
         {/* Floating Color Picker */}
         <div className="absolute bottom-8 left-0 right-0 bg-white/95 backdrop-blur-sm rounded-full mx-4 py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-20 scrollbar-hide">
-          <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Shop colors:</p>
+          <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Tap to paint the wall:</p>
           {PAINT_COLORS.map((color) => (
-            <div
+            <button
               key={color.id}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform hover:scale-110 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
+              type="button"
+              aria-label={`Paint the wall ${color.name}`}
+              aria-pressed={selectedColor.id === color.id}
+              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform cursor-pointer hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${selectedColor.id === color.id ? 'active ring-2 ring-accent scale-110' : ''}`}
               style={{ backgroundColor: color.hex }}
-              title={`Preview ${color.name}`}
+              title={color.name}
+              onClick={() => setSelectedColor(color)}
               onMouseEnter={() => setSelectedColor(color)}
+              onTouchStart={() => setSelectedColor(color)}
             />
           ))}
         </div>
