@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
@@ -18,7 +18,21 @@ export default function HomePage() {
   const [toastMessage, setToastMessage] = useState('')
 
   const { addToCart } = useCart()
-  
+
+  // Show the floating color picker only while the hero room is on screen
+  const heroRef = useRef<HTMLElement>(null)
+  const [pickerVisible, setPickerVisible] = useState(true)
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+    const obs = new IntersectionObserver(
+      ([entry]) => setPickerVisible(entry.intersectionRatio > 0.25),
+      { threshold: [0, 0.25, 0.5] }
+    )
+    obs.observe(hero)
+    return () => obs.disconnect()
+  }, [])
+
   const filteredColors = activeCategory 
     ? PAINT_COLORS.filter(c => c.category === activeCategory)
     : PAINT_COLORS
@@ -73,7 +87,7 @@ export default function HomePage() {
       <Header />
 
       {/* Hero - Interactive Room with Color-Changing Wall */}
-      <section className="min-h-screen pt-16 relative overflow-hidden">
+      <section ref={heroRef} className="min-h-screen pt-16 relative overflow-hidden">
         {/* Room Background Image */}
         <div className="absolute inset-0">
           {/* Base room photo - untouched */}
@@ -83,42 +97,27 @@ export default function HomePage() {
             className="w-full h-full object-cover"
           />
           
-          {/* Wall-only color layer - triple blend for rich color depth */}
-          <div 
+          {/* Wall paint: multiply keeps the wall's real light and shadow while
+              applying true pigment; the color layer restores hue depth in shadows */}
+          <div
             className="absolute inset-0 wall-transition"
-            style={{ 
-              backgroundColor: selectedColor.hex,
-              mixBlendMode: 'overlay',
-              opacity: 0.85,
-              maskImage: 'url(/room-wall-mask.png)',
-              WebkitMaskImage: 'url(/room-wall-mask.png)',
-              maskSize: 'cover',
-              WebkitMaskSize: 'cover',
-              maskPosition: 'center',
-              WebkitMaskPosition: 'center',
-            }}
-          />
-          {/* Second layer - punchy color saturation */}
-          <div 
-            className="absolute inset-0 wall-transition"
-            style={{ 
-              backgroundColor: selectedColor.hex,
-              mixBlendMode: 'color',
-              opacity: 0.75,
-              maskImage: 'url(/room-wall-mask.png)',
-              WebkitMaskImage: 'url(/room-wall-mask.png)',
-              maskSize: 'cover',
-              WebkitMaskSize: 'cover',
-              maskPosition: 'center',
-              WebkitMaskPosition: 'center',
-            }}
-          />
-          {/* Third layer - multiply for depth/shadows */}
-          <div 
-            className="absolute inset-0 wall-transition"
-            style={{ 
+            style={{
               backgroundColor: selectedColor.hex,
               mixBlendMode: 'multiply',
+              opacity: 1,
+              maskImage: 'url(/room-wall-mask.png)',
+              WebkitMaskImage: 'url(/room-wall-mask.png)',
+              maskSize: 'cover',
+              WebkitMaskSize: 'cover',
+              maskPosition: 'center',
+              WebkitMaskPosition: 'center',
+            }}
+          />
+          <div
+            className="absolute inset-0 wall-transition"
+            style={{
+              backgroundColor: selectedColor.hex,
+              mixBlendMode: 'color',
               opacity: 0.3,
               maskImage: 'url(/room-wall-mask.png)',
               WebkitMaskImage: 'url(/room-wall-mask.png)',
@@ -193,10 +192,10 @@ export default function HomePage() {
                   Shop Curated Colors
                   <ChevronRight className="w-4 h-4" />
                 </Link>
-                <button className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
+                <a href="#compare" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
                   <Sparkles className="w-4 h-4" />
-                  Take the Color Quiz
-                </button>
+                  See How We Compare
+                </a>
               </div>
             </div>
 
@@ -224,7 +223,21 @@ export default function HomePage() {
                     <span className="text-text-secondary">4 Gallon Bundle</span>
                     <span className="font-medium text-text-primary">$125</span>
                   </div>
-                  <Link 
+                  <div className="rounded-xl bg-bg-cream px-4 py-3 space-y-1.5 text-sm">
+                    <div className="flex items-center justify-between text-text-muted">
+                      <span>Same room in Clare</span>
+                      <span className="line-through">$236</span>
+                    </div>
+                    <div className="flex items-center justify-between text-text-muted">
+                      <span>Sherwin-Williams</span>
+                      <span className="line-through">$260</span>
+                    </div>
+                    <div className="flex items-center justify-between font-medium text-success">
+                      <span>You save</span>
+                      <span>$111+</span>
+                    </div>
+                  </div>
+                  <Link
                     href={`/colors/${selectedColor.id}`}
                     className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary inline-flex items-center justify-center gap-2"
                   >
@@ -240,8 +253,10 @@ export default function HomePage() {
           </div>
         </div>
         
-        {/* Floating Color Picker */}
-        <div className="absolute bottom-8 left-0 right-0 bg-white/95 backdrop-blur-sm rounded-full mx-4 py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-20 scrollbar-hide">
+      </section>
+
+      {/* Floating Color Picker — pinned while the hero room is on screen */}
+      <div className={`fixed bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-full py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-40 scrollbar-hide transition-opacity duration-300 ${pickerVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Tap to paint the wall:</p>
           {PAINT_COLORS.map((color) => (
             <button
@@ -249,16 +264,13 @@ export default function HomePage() {
               type="button"
               aria-label={`Paint the wall ${color.name}`}
               aria-pressed={selectedColor.id === color.id}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform cursor-pointer hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${selectedColor.id === color.id ? 'active ring-2 ring-accent scale-110' : ''}`}
+              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform cursor-pointer hover:scale-125 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${selectedColor.id === color.id ? 'active ring-2 ring-accent scale-110' : ''}`}
               style={{ backgroundColor: color.hex }}
               title={color.name}
               onClick={() => setSelectedColor(color)}
-              onMouseEnter={() => setSelectedColor(color)}
-              onTouchStart={() => setSelectedColor(color)}
             />
           ))}
-        </div>
-      </section>
+      </div>
 
       {/* Trust Bar */}
       <section className="bg-bg-white py-8 border-b border-border">
@@ -513,7 +525,7 @@ export default function HomePage() {
       </section>
 
       {/* Comparison Table */}
-      <section className="py-20 bg-bg-cream">
+      <section id="compare" className="py-20 bg-bg-cream">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-light text-text-primary mb-4">How We Compare</h2>
@@ -607,9 +619,9 @@ export default function HomePage() {
       <Footer />
 
       {/* Floating Chat Button */}
-      <button className="fixed bottom-6 right-6 w-14 h-14 bg-cta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-cta-hover transition-colors z-50">
+      <Link href="/contact" aria-label="Contact us" className="fixed bottom-6 right-6 w-14 h-14 bg-cta text-white rounded-full shadow-lg flex items-center justify-center hover:bg-cta-hover transition-colors z-50">
         <MessageCircle className="w-6 h-6" />
-      </button>
+      </Link>
 
       {/* Color Detail Modal */}
       {modalColor && (
