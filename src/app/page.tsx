@@ -86,8 +86,13 @@ export default function HomePage() {
     <div className="min-h-screen">
       <Header />
 
+      {/* Flat-rate announcement ribbon — sits right under the fixed header, always visible */}
+      <div className="fixed top-16 left-0 right-0 z-30 bg-cta text-white text-center text-xs sm:text-sm font-medium py-2.5 px-4 tracking-wide">
+        Four gallons in one box · one flat price · shipped to your door
+      </div>
+
       {/* Hero - Interactive Room with Color-Changing Wall */}
-      <section ref={heroRef} className="min-h-screen pt-16 relative overflow-hidden">
+      <section ref={heroRef} className="min-h-[88vh] pt-28 relative overflow-hidden">
         {/* Room Background Image */}
         <div className="absolute inset-0">
           {/* Base room photo - untouched */}
