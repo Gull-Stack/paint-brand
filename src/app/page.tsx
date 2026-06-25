@@ -283,14 +283,14 @@ export default function HomePage() {
               One box. Four gallons. <span className="font-medium">One flat price.</span>
             </h2>
             <p className="text-text-secondary text-lg">
-              Fill a box with four one-gallon jugs—mix and match your colors or stock up on a favorite—and we ship it straight to your door for one flat rate. No store run, no contractor markup.
+              Pick your color, we box up four one-gallon jugs of it, and ship it straight to your door for one flat rate. Four gallons covers about 1,200 sq ft—no store run, no contractor markup.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-4">
             {[
-              { icon: Palette, step: '01', title: 'Fill your box', text: 'Choose any four one-gallon colors from the 64-color collection—all one shade or a mix.' },
-              { icon: Package, step: '02', title: 'We pack it up', text: 'Four sealed one-gallon jugs, boxed and ready to ship. Enough to cover about 1,200 sq ft.' },
+              { icon: Palette, step: '01', title: 'Pick your color', text: 'Choose one shade from the 64-color collection. Your box comes with four one-gallon jugs of it.' },
+              { icon: Package, step: '02', title: 'We pack it up', text: 'Four sealed one-gallon jugs of your color, boxed and ready to ship. Enough to cover about 1,200 sq ft.' },
               { icon: Truck, step: '03', title: 'Flat-rate delivery', text: 'One flat price, shipped free to your front door. No trips, no surprises at checkout.' },
             ].map((s) => (
               <div key={s.step} className="relative bg-bg-cream rounded-2xl p-8 text-center">
@@ -309,7 +309,7 @@ export default function HomePage() {
               <span className="font-medium">4 gallons</span> · ~1,200 sq ft · <span className="font-medium">$125 flat, shipped</span>
             </p>
             <Link href="/colors" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
-              Build your box <ArrowRight className="w-4 h-4" />
+              Pick your color <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
