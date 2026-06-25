@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle } from 'lucide-react'
+import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle, Palette, Package } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -144,7 +144,7 @@ export default function HomePage() {
                 <span className="font-medium">Premium Quality, Smart Price</span>
               </h1>
               <p className="text-lg md:text-xl mb-8 max-w-lg text-white/90 drop-shadow">
-                Professional-grade, zero-VOC paint with guaranteed Pantone matching. 64 designer-curated colors delivered in premium 4-gallon bundles—covering 1,200 sq ft for just $125.
+                Fill a box with four one-gallon jugs and we ship it straight to your door for one flat $125. Professional-grade, zero-VOC paint in 64 designer-curated colors—about 1,200 sq ft of coverage, guaranteed Pantone match.
               </p>
               
               {/* Premium Value Props */}
@@ -271,6 +271,49 @@ export default function HomePage() {
             />
           ))}
       </div>
+
+      {/* The Flat-Rate Box — how direct shipping works */}
+      <section className="py-20 bg-bg-white border-b border-border">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14 max-w-2xl mx-auto">
+            <span className="inline-block px-3 py-1 bg-accent-light text-accent rounded-full text-xs font-medium mb-5">
+              Direct to your door
+            </span>
+            <h2 className="text-3xl md:text-5xl font-light text-text-primary mb-4">
+              One box. Four gallons. <span className="font-medium">One flat price.</span>
+            </h2>
+            <p className="text-text-secondary text-lg">
+              Fill a box with four one-gallon jugs—mix and match your colors or stock up on a favorite—and we ship it straight to your door for one flat rate. No store run, no contractor markup.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 md:gap-4">
+            {[
+              { icon: Palette, step: '01', title: 'Fill your box', text: 'Choose any four one-gallon colors from the 64-color collection—all one shade or a mix.' },
+              { icon: Package, step: '02', title: 'We pack it up', text: 'Four sealed one-gallon jugs, boxed and ready to ship. Enough to cover about 1,200 sq ft.' },
+              { icon: Truck, step: '03', title: 'Flat-rate delivery', text: 'One flat price, shipped free to your front door. No trips, no surprises at checkout.' },
+            ].map((s) => (
+              <div key={s.step} className="relative bg-bg-cream rounded-2xl p-8 text-center">
+                <div className="text-xs font-medium text-accent mb-4">STEP {s.step}</div>
+                <div className="w-14 h-14 rounded-full bg-bg-white border border-border flex items-center justify-center mx-auto mb-5">
+                  <s.icon className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-lg font-medium text-text-primary mb-2">{s.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{s.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 text-center">
+            <p className="text-text-primary text-lg">
+              <span className="font-medium">4 gallons</span> · ~1,200 sq ft · <span className="font-medium">$125 flat, shipped</span>
+            </p>
+            <Link href="/colors" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
+              Build your box <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Trust Bar */}
       <section className="bg-bg-white py-8 border-b border-border">
