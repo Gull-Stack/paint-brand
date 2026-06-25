@@ -39,6 +39,9 @@ export default function Header() {
           <Link href="/colors" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
             Colors
           </Link>
+          <Link href="/design" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
+            Design
+          </Link>
           <Link href="/inspiration" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
             Inspiration
           </Link>
@@ -75,6 +78,9 @@ export default function Header() {
             </Link>
             <Link href="/colors" className="block text-sm text-text-secondary hover:text-text-primary">
               Colors
+            </Link>
+            <Link href="/design" className="block text-sm text-text-secondary hover:text-text-primary">
+              Design
             </Link>
             <Link href="/inspiration" className="block text-sm text-text-secondary hover:text-text-primary">
               Inspiration

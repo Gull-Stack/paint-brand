@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, ArrowRight, Star, CheckCircle, Palette, Package } from 'lucide-react'
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
@@ -19,21 +19,10 @@ export default function HomePage() {
 
   const { addToCart } = useCart()
 
-  // Show the floating color picker only while the hero room is on screen
-  const heroRef = useRef<HTMLElement>(null)
-  const [pickerVisible, setPickerVisible] = useState(true)
-  useEffect(() => {
-    const hero = heroRef.current
-    if (!hero) return
-    const obs = new IntersectionObserver(
-      ([entry]) => setPickerVisible(entry.intersectionRatio > 0.25),
-      { threshold: [0, 0.25, 0.5] }
-    )
-    obs.observe(hero)
-    return () => obs.disconnect()
-  }, [])
+  // Static designer color shown on the hero room wall (interactive painter lives on /design)
+  const heroColor = PAINT_COLORS.find(c => c.id === 'sage') ?? PAINT_COLORS[0]
 
-  const filteredColors = activeCategory 
+  const filteredColors = activeCategory
     ? PAINT_COLORS.filter(c => c.category === activeCategory)
     : PAINT_COLORS
 
@@ -91,23 +80,19 @@ export default function HomePage() {
         Four gallons in one box · one flat price · shipped to your door
       </div>
 
-      {/* Hero - Interactive Room with Color-Changing Wall */}
-      <section ref={heroRef} className="min-h-[88vh] pt-28 relative overflow-hidden">
-        {/* Room Background Image */}
+      {/* Hero — experience-first statement over a styled room */}
+      <section className="min-h-[88vh] pt-28 relative overflow-hidden flex items-center">
+        {/* Room Background Image with a default designer color on the wall */}
         <div className="absolute inset-0">
-          {/* Base room photo - untouched */}
-          <img 
-            src="/room-bg.jpg" 
-            alt="Stylish living room interior" 
+          <img
+            src="/room-bg.jpg"
+            alt="Modern living room painted in Dwell paint"
             className="w-full h-full object-cover"
           />
-          
-          {/* Wall paint: multiply keeps the wall's real light and shadow while
-              applying true pigment; the color layer restores hue depth in shadows */}
           <div
-            className="absolute inset-0 wall-transition"
+            className="absolute inset-0"
             style={{
-              backgroundColor: selectedColor.hex,
+              backgroundColor: heroColor.hex,
               mixBlendMode: 'multiply',
               opacity: 1,
               maskImage: 'url(/room-wall-mask.png)',
@@ -119,9 +104,9 @@ export default function HomePage() {
             }}
           />
           <div
-            className="absolute inset-0 wall-transition"
+            className="absolute inset-0"
             style={{
-              backgroundColor: selectedColor.hex,
+              backgroundColor: heroColor.hex,
               mixBlendMode: 'color',
               opacity: 0.3,
               maskImage: 'url(/room-wall-mask.png)',
@@ -132,150 +117,37 @@ export default function HomePage() {
               WebkitMaskPosition: 'center',
             }}
           />
-          
-          {/* Gradient fade for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Hero Copy */}
-            <div className="relative z-10">
-              <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
-                ✨ Designer-Curated Paint Collection
-              </span>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight drop-shadow-lg">
-                Elevate Your Home<br />
-                <span className="font-medium">Premium Quality, Smart Price</span>
-              </h1>
-              <p className="text-lg md:text-xl mb-8 max-w-lg text-white/90 drop-shadow">
-                Fill a box with four one-gallon jugs and we ship it straight to your door for one flat $125. Professional-grade, zero-VOC paint in 64 designer-curated colors—about 1,200 sq ft of coverage, guaranteed Pantone match.
-              </p>
-              
-              {/* Premium Value Props */}
-              <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Zero-VOC Formula</span>
-                    <div className="text-xs text-white/70">Safe for family & pets</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Guaranteed Pantone Match</span>
-                    <div className="text-xs text-white/70">Professional color accuracy</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Free Shipping</span>
-                    <div className="text-xs text-white/70">On all 4-gallon bundles</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 text-white/90">
-                  <div className="w-7 h-7 rounded-full bg-success flex items-center justify-center">
-                    <Check className="w-3 h-3 text-white" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Premium Coverage</span>
-                    <div className="text-xs text-white/70">1,200 sq ft per bundle</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
-                  Shop Curated Colors
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-                <a href="#compare" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
-                  <Sparkles className="w-4 h-4" />
-                  See How We Compare
-                </a>
-              </div>
-            </div>
-
-            {/* Right - Color Preview Card */}
-            <div className="relative">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl max-w-sm mx-auto lg:ml-auto">
-                <div className="text-center mb-6">
-                  <p className="text-sm text-text-muted mb-2">See this color in the room</p>
-                  <h3 className="text-2xl font-medium text-text-primary">{selectedColor.name}</h3>
-                  <p className="text-sm text-text-muted mt-1">{selectedColor.hex.toUpperCase()}</p>
-                  {selectedColor.pantone && (
-                    <p className="text-xs text-text-muted">Pantone {selectedColor.pantone}</p>
-                  )}
-                </div>
-                
-                {/* Color Swatch */}
-                <div 
-                  className="w-full aspect-square rounded-2xl mb-6 shadow-inner wall-transition"
-                  style={{ backgroundColor: selectedColor.hex }}
-                />
-                
-                {/* Quick Add */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-text-secondary">4 Gallon Bundle</span>
-                    <span className="font-medium text-text-primary">$125</span>
-                  </div>
-                  <div className="rounded-xl bg-bg-cream px-4 py-3 space-y-1.5 text-sm">
-                    <div className="flex items-center justify-between text-text-muted">
-                      <span>Same room in Clare</span>
-                      <span className="line-through">$236</span>
-                    </div>
-                    <div className="flex items-center justify-between text-text-muted">
-                      <span>Sherwin-Williams</span>
-                      <span className="line-through">$260</span>
-                    </div>
-                    <div className="flex items-center justify-between font-medium text-success">
-                      <span>You save</span>
-                      <span>$111+</span>
-                    </div>
-                  </div>
-                  <Link
-                    href={`/colors/${selectedColor.id}`}
-                    className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary inline-flex items-center justify-center gap-2"
-                  >
-                    Shop This Color
-                    <ChevronRight className="w-4 h-4" />
-                  </Link>
-                  <p className="text-xs text-center text-text-muted">
-                    Free shipping • Pantone match guaranteed • ~1,200 sq ft coverage
-                  </p>
-                </div>
-              </div>
+        <div className="relative max-w-7xl mx-auto px-6 w-full">
+          <div className="max-w-2xl">
+            <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
+              Designer paint, delivered
+            </span>
+            <h1 className="text-5xl md:text-7xl font-light text-white mb-6 leading-[1.05] drop-shadow-lg">
+              Paint Shopping.<br />
+              <span className="font-medium">Reinvented.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white font-light mb-3 drop-shadow">
+              Choose your color. Order online. Delivered to your door.
+            </p>
+            <p className="text-base md:text-lg text-white/85 max-w-xl mb-9 drop-shadow">
+              Browse 64 designer colors, preview them on a real room, and order in minutes. Professional-quality paint, boxed and shipped straight to you—no store run, no hassle.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
+                Browse the Colors
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+              <Link href="/design" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/15 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/25 transition-colors border border-white/40">
+                <Sparkles className="w-4 h-4" />
+                Design Your Room
+              </Link>
             </div>
           </div>
         </div>
-        
       </section>
-
-      {/* Floating Color Picker — pinned while the hero room is on screen */}
-      <div className={`fixed bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-full py-3 px-4 shadow-xl flex items-center gap-2 overflow-x-auto z-40 scrollbar-hide transition-opacity duration-300 ${pickerVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <p className="text-xs text-text-muted whitespace-nowrap pr-2 flex-shrink-0">Tap to paint the wall:</p>
-          {PAINT_COLORS.map((color) => (
-            <button
-              key={color.id}
-              type="button"
-              aria-label={`Paint the wall ${color.name}`}
-              aria-pressed={selectedColor.id === color.id}
-              className={`swatch w-8 h-8 rounded-full flex-shrink-0 transition-transform cursor-pointer hover:scale-125 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${selectedColor.id === color.id ? 'active ring-2 ring-accent scale-110' : ''}`}
-              style={{ backgroundColor: color.hex }}
-              title={color.name}
-              onClick={() => setSelectedColor(color)}
-            />
-          ))}
-      </div>
 
       {/* The Flat-Rate Box — how direct shipping works */}
       <section className="py-20 bg-bg-white border-b border-border">
@@ -311,7 +183,7 @@ export default function HomePage() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-x-8 gap-y-2 text-center">
             <p className="text-text-primary text-lg">
-              <span className="font-medium">4 gallons</span> · ~1,200 sq ft · <span className="font-medium">$125 flat, shipped</span>
+              <span className="font-medium">4 gallons</span> · ~1,200 sq ft · <span className="font-medium">one flat rate, shipped free</span>
             </p>
             <Link href="/colors" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
               Pick your color <ArrowRight className="w-4 h-4" />
@@ -348,55 +220,39 @@ export default function HomePage() {
       <section className="py-20 bg-bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-text-primary mb-4">Our Bestsellers</h2>
+            <h2 className="text-4xl font-light text-text-primary mb-4">Most Loved Colors</h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              The most loved colors by design-savvy women. Each bundle includes 4 gallons delivered to your door.
+              The shades our customers reach for most. Tap any color to see it on a real room and get the details.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {bestsellerColors.map((color, index) => (
-              <div key={color.id} className={`bg-bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow ${index === 0 ? 'ring-2 ring-accent' : ''}`}>
+              <Link
+                key={color.id}
+                href={`/colors/${color.id}`}
+                className={`group block bg-bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow ${index === 0 ? 'ring-2 ring-accent' : ''}`}
+              >
                 {index === 0 && (
                   <div className="bg-accent text-white text-sm font-medium px-3 py-1 rounded-full w-fit mb-4">
-                    Most Popular
+                    Most Loved
                   </div>
                 )}
                 <div className="aspect-square rounded-xl mb-6 shadow-sm" style={{ backgroundColor: color.hex }}>
-                  <div className="w-full h-full rounded-xl bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
+                  <div className="w-full h-full rounded-xl bg-gradient-to-b from-transparent via-transparent to-black/10"></div>
                 </div>
-                <h3 className="text-lg font-medium text-text-primary mb-2">{color.name}</h3>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-light text-text-primary">$125</span>
-                  <div className="text-right text-sm text-text-secondary">
-                    <div>4 gallons</div>
-                    <div>~1,200 sq ft</div>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => handleAddToCart(color)}
-                  className={`w-full py-3 rounded-full font-medium btn-primary transition-colors ${
-                    justAdded === color.id
-                      ? 'bg-green-500 hover:bg-green-600 text-white'
-                      : 'bg-cta text-white'
-                  }`}
-                >
-                  {justAdded === color.id ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      Added ✓
-                    </div>
-                  ) : (
-                    'Add to Cart - $125'
-                  )}
-                </button>
-              </div>
+                <h3 className="text-lg font-medium text-text-primary mb-1">{color.name}</h3>
+                <p className="text-sm text-text-muted mb-4">4 gallons · ~1,200 sq ft</p>
+                <span className="inline-flex items-center gap-2 text-accent group-hover:text-accent-dark transition-colors font-medium text-sm">
+                  See This Color <ChevronRight className="w-4 h-4" />
+                </span>
+              </Link>
             ))}
           </div>
 
           <div className="text-center mt-12">
             <Link href="/colors" className="inline-flex items-center gap-2 text-accent hover:text-accent-dark transition-colors font-medium">
-              Shop All 64 Colors <ArrowRight className="w-4 h-4" />
+              Browse All 64 Colors <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -406,9 +262,9 @@ export default function HomePage() {
       <section className="py-20 bg-bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-text-primary mb-4">Customer Transformations</h2>
+            <h2 className="text-4xl font-light text-text-primary mb-4">Rooms, transformed</h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              Real women sharing their Dwell transformations
+              Real spaces our customers made over—color chosen online, delivered, and rolled on in a weekend.
             </p>
           </div>
 
@@ -466,43 +322,43 @@ export default function HomePage() {
       <section className="py-20 bg-bg-cream">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-text-primary mb-4">Why Dwell?</h2>
+            <h2 className="text-4xl font-light text-text-primary mb-4">A better way to buy paint</h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              Professional-grade paint with designer curation. Get the quality of premium brands like Clare and Sherwin-Williams, with the smart value and style-forward approach you love from Target and Crate & Barrel.
+              No fluorescent-lit aisle, no thousand confusing chips, no guessing how it'll look. Pick a color, see it on your wall, and have it on your doorstep—the whole thing takes minutes.
             </p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
-                <Leaf className="w-8 h-8 text-accent" />
+                <Palette className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Zero-VOC Formula</h3>
-              <p className="text-text-secondary text-sm">Premium, low-odor paint that's safe for nurseries, bedrooms, and family spaces. No harmful chemicals, no compromise on quality.</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Choose with confidence</h3>
+              <p className="text-text-secondary text-sm">64 designer colors, each previewed on a real room. You see exactly what you're getting before you buy.</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
                 <Sparkles className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Designer-Curated Palette</h3>
-              <p className="text-text-secondary text-sm">64 colors handpicked by interior designers for modern homes. No overwhelming choice—just the perfect shades for your style.</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Order in minutes</h3>
+              <p className="text-text-secondary text-sm">Tap your color, add the box to your cart, check out. No store trip, no waiting at the paint counter.</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Smart Value Pricing</h3>
-              <p className="text-text-secondary text-sm">Premium paint at smart prices. $125 covers 1,200 sq ft—less than big box stores, delivered to your door.</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Delivered to your door</h3>
+              <p className="text-text-secondary text-sm">Four gallons boxed and shipped straight to you. One flat rate, free shipping, no hauling cans home.</p>
             </div>
-            
+
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-light rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-accent" />
+                <Leaf className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-lg font-medium text-text-primary mb-2">Professional Quality</h3>
-              <p className="text-text-secondary text-sm">Guaranteed Pantone color matching and superior coverage. The same quality professionals use, made simple for your home.</p>
+              <h3 className="text-lg font-medium text-text-primary mb-2">Ready to roll</h3>
+              <p className="text-text-secondary text-sm">Professional-quality, zero-VOC paint that goes on beautifully and is safe to live with the same day.</p>
             </div>
           </div>
         </div>
@@ -513,10 +369,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-light text-text-primary mb-4">
-              Shop Our <span className="font-medium">64 Designer Colors</span>
+              Find <span className="font-medium">your color</span>
             </h2>
             <p className="text-text-secondary max-w-xl mx-auto">
-              Premium low-VOC paint in colors curated by interior design professionals. Perfect for modern homes inspired by Target, Nordstrom, and Crate & Barrel aesthetics.
+              64 designer shades, curated so you're not lost in a wall of chips. Tap any one to see it on a room and get the details.
             </p>
           </div>
 
@@ -547,97 +403,24 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Color Grid */}
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-4 mb-12">
+          {/* Modern color grid — large tiles, name + family, link to detail */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5 mb-12">
             {filteredColors.map((color) => (
-              <button
-                key={color.id}
-                onClick={() => setSelectedColor(color)}
-                className="group"
-              >
+              <Link key={color.id} href={`/colors/${color.id}`} className="group">
                 <div
-                  className={`swatch aspect-square rounded-xl mb-2 transition-all hover:scale-105 ${selectedColor.id === color.id ? 'active ring-2 ring-accent' : ''}`}
+                  className="aspect-square rounded-2xl mb-3 ring-1 ring-black/5 shadow-sm transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-lg"
                   style={{ backgroundColor: color.hex }}
                 />
-                <p className="text-xs text-text-primary truncate group-hover:text-accent transition-colors">{color.name}</p>
-              </button>
+                <p className="text-sm font-medium text-text-primary truncate group-hover:text-accent transition-colors">{color.name}</p>
+                <p className="text-xs text-text-muted">{categoryNames[color.category]}</p>
+              </Link>
             ))}
           </div>
 
           <div className="text-center">
             <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
-              Shop These Colors <ArrowRight className="w-4 h-4" />
+              Browse All Colors <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section id="compare" className="py-20 bg-bg-cream">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-text-primary mb-4">How We Compare</h2>
-            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-              Premium quality paint with designer curation and smart pricing. See how Dwell stacks up against other paint brands.
-            </p>
-          </div>
-
-          <div className="bg-bg-white rounded-2xl overflow-hidden shadow-lg">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left p-6 text-text-primary font-medium">Feature</th>
-                  <th className="text-center p-6 bg-accent text-white font-medium">Dwell</th>
-                  <th className="text-center p-6 text-text-secondary font-medium">Sherwin-Williams</th>
-                  <th className="text-center p-6 text-text-secondary font-medium">Clare</th>
-                  <th className="text-center p-6 text-text-secondary font-medium">Big Box Store</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-border">
-                  <td className="p-6 text-text-primary font-medium">Price per gallon</td>
-                  <td className="text-center p-6 text-success font-semibold">$31.25</td>
-                  <td className="text-center p-6 text-text-secondary">$55-75</td>
-                  <td className="text-center p-6 text-text-secondary">$54</td>
-                  <td className="text-center p-6 text-text-secondary">$45-65</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-6 text-text-primary font-medium">Zero-VOC Formula</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">Limited</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-6 text-text-primary font-medium">Designer-Curated Colors</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">DIY Selection</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">DIY Selection</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-6 text-text-primary font-medium">Free Shipping</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">Store Pickup</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">Store Pickup</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-6 text-text-primary font-medium">Pantone Color Matching</td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6"><Check className="w-5 h-5 text-success mx-auto" /></td>
-                  <td className="text-center p-6 text-text-muted">Limited</td>
-                  <td className="text-center p-6 text-text-muted">Extra Cost</td>
-                </tr>
-                <tr>
-                  <td className="p-6 text-text-primary font-medium">Target Audience</td>
-                  <td className="text-center p-6 text-accent font-semibold">Design-Savvy Women</td>
-                  <td className="text-center p-6 text-text-secondary">Professionals</td>
-                  <td className="text-center p-6 text-text-secondary">Design-Focused</td>
-                  <td className="text-center p-6 text-text-secondary">DIY General</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </section>
@@ -646,18 +429,18 @@ export default function HomePage() {
       <section className="py-20 bg-cta text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-light mb-4">
-            Ready to paint your <span className="font-medium">dream space</span>?
+            Find your color in <span className="font-medium">the next five minutes</span>
           </h2>
           <p className="text-white/80 mb-8 max-w-lg mx-auto">
-            64 designer colors. Premium quality. $125 shipped. Transform your home with colors that speak to your style.
+            Pick a shade, see it on your wall, and have professional-quality paint on its way to your door. That's the whole process.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors">
-              Shop Colors
+            <Link href="/design" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors">
+              Design Your Room
               <ChevronRight className="w-4 h-4" />
             </Link>
-            <Link href="/inspiration" className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
-              Get Inspired
+            <Link href="/colors" className="inline-flex items-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/30 transition-colors border border-white/30">
+              Browse Colors
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
