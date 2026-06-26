@@ -27,7 +27,30 @@ Homepage hero paints the wall of `public/room-bg.jpg` using `public/room-wall-ma
 contour). If the room photo ever changes, re-run that script and re-tune its seeds and
 exclusion zones.
 
+## Product model (current truth — read before touching cart/box copy)
+
+- A **BOX** holds **4 one-gallon cans, ANY colors (mix-and-match)**. NOT one color × 4.
+  (This reversed mid-project — ignore older "one color" notes.)
+- Pick a 5th color → opens a new box. Flat price per box (~$100, **TBD** — `BOX_PRICE`
+  constant in `src/components/BuildYourBox.tsx`).
+- Coming: box types (Interior / Exterior / 5-gallon pails — pails ship boxed singly).
+- Same 64 colors both brands; men's (Anvil) orders darker colors first.
+- Accessories upsell at checkout (brushes/rollers/tape/cloths/trays) — client already
+  has suppliers; build the UI only, they supply products.
+
 ## Session Log
+
+### 2026-06-25 (call) — Build Your Box model + roadmap
+- Strategy call w/ Brad + Malory. Product is now a fill-your-own box of any 4 colors.
+  Built the interactive **BuildYourBox** widget as the Dwell homepage hero (conveys the
+  ordering process on the first screen — Brad's #1 ask). Mix-and-match, "Add Box to
+  Cart · $100" (placeholder price). Box-section copy reverted to "any four colors."
+- Full decisions + prioritized roadmap in Notion "Paint Empire" page (2026-06-25 entry).
+- NEXT: mirror to Anvil; box options (interior/exterior/5gal); fix cart→box model + box
+  pricing; accessories upsell; shop page colors-first; /design more rooms + photo-upload
+  prototype; AI hero-video prototype (Higgsfield); lock names → domains → logos.
+- Names leaning: women's **Shade Paint Studio**, men's **Anvil** (or Paintbox /
+  boxofpaint.com which they own). Deposit still unpaid. Malory→AT Sports ~July 22.
 
 ### 2026-06-25 — Dwell v2 from Malory's review (experience-first)
 - Reframed the whole homepage around the buying *experience*, away from quality/value
