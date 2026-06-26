@@ -40,6 +40,17 @@ exclusion zones.
 
 ## Session Log
 
+### 2026-06-25 (eve) — Box commerce shipped (cart/shop/box-types/accessories)
+- Did roadmap items 2-5: rebuilt CartContext around **boxes + accessories** (was
+  per-color qty); box types Interior $100 / Exterior $120 / 5-gal Pail $160 (placeholder).
+- **/shop** is now the colors-first Build & Order hub: box-type selector → pick colors →
+  fill box → order summary → "Complete your project" accessories upsell → checkout.
+  Draft-box flow lets color pages "Add to Your Box".
+- Checkout API rewritten for box + accessory line items. Verified full flow in preview
+  (mix box of 4, add brush, total $124, checkout). Stripe still 503 (no key on gull-stack).
+- Held per Bryce: Anvil mirror (#1) and /design rooms/photo-upload (#6).
+- ACCESSORIES list in CartContext is placeholder — client has real suppliers/products.
+
 ### 2026-06-25 (call) — Build Your Box model + roadmap
 - Strategy call w/ Brad + Malory. Product is now a fill-your-own box of any 4 colors.
   Built the interactive **BuildYourBox** widget as the Dwell homepage hero (conveys the
