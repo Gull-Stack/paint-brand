@@ -14,7 +14,7 @@ const BOX_PRICE = 100 // flat per box — pricing TBD with client
 export default function BuildYourBox() {
   const [slots, setSlots] = useState<(PaintColor | null)[]>([null, null, null, null])
   const [added, setAdded] = useState(false)
-  const { addToCart } = useCart()
+  const { addBox } = useCart()
   const router = useRouter()
 
   const filled = slots.filter(Boolean) as PaintColor[]
@@ -40,7 +40,7 @@ export default function BuildYourBox() {
     })
 
   const addBoxToCart = () => {
-    filled.forEach((c) => addToCart(c, 1))
+    addBox('interior', filled)
     setAdded(true)
     setTimeout(() => router.push('/shop'), 700)
   }

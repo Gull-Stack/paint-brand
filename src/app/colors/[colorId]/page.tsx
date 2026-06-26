@@ -13,11 +13,11 @@ export default function ColorProductPage() {
   const params = useParams()
   const colorId = params.colorId as string
   const [color, setColor] = useState<PaintColor | null>(null)
-  const [quantity, setQuantity] = useState(1)
   const [showToast, setShowToast] = useState(false)
   const [isFavorited, setIsFavorited] = useState(false)
-  
-  const { addToCart, isInCart, proceedToCheckout, isCheckingOut } = useCart()
+
+  const { addDraftColor, draftColors } = useCart()
+  const inBox = color ? draftColors.some((c) => c.id === color.id) : false
 
   useEffect(() => {
     const foundColor = PAINT_COLORS.find(c => c.id === colorId)
@@ -41,9 +41,7 @@ export default function ColorProductPage() {
   }
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(color)
-    }
+    if (color) addDraftColor(color)
     setShowToast(true)
     setTimeout(() => setShowToast(false), 3000)
   }
@@ -60,7 +58,7 @@ export default function ColorProductPage() {
       {showToast && (
         <div className="fixed top-20 right-6 z-50 bg-success text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2">
           <Check className="w-4 h-4" />
-          Added {quantity} bundle{quantity > 1 ? 's' : ''} of {color.name} to cart!
+          {color.name} added to your box
         </div>
       )}
 
@@ -176,17 +174,11 @@ export default function ColorProductPage() {
                 </div>
               </div>
 
-              {/* 4-Gallon Bundle Info */}
+              {/* Add to box */}
               <div className="bg-bg-white rounded-3xl p-8 border border-border">
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h2 className="text-2xl font-light text-text-primary mb-2">4-Gallon Bundle</h2>
-                    <p className="text-text-muted">Perfect for most rooms (~1,200 sq ft coverage)</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-3xl font-light text-text-primary">$125</span>
-                    <p className="text-text-muted text-sm">$31.25 per gallon</p>
-                  </div>
+                <div className="mb-6">
+                  <h2 className="text-2xl font-light text-text-primary mb-2">Add this color to your box</h2>
+                  <p className="text-text-muted">Fill a box with any four colors—we ship it to your door for one flat price.</p>
                 </div>
 
                 {/* Features */}
@@ -217,64 +209,23 @@ export default function ColorProductPage() {
                   </div>
                 </div>
 
-                {/* Quantity & Add to Cart */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-text-secondary">Quantity:</label>
-                    <div className="flex items-center gap-3">
-                      <button 
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-10 h-10 rounded-full bg-bg-cream flex items-center justify-center hover:bg-border transition-colors"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-8 text-center font-medium">{quantity}</span>
-                      <button 
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="w-10 h-10 rounded-full bg-bg-cream flex items-center justify-center hover:bg-border transition-colors"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <button 
-                      onClick={async () => {
-                        // Add to cart temporarily for checkout
-                        for (let i = 0; i < quantity; i++) {
-                          addToCart(color)
-                        }
-                        // Immediately proceed to checkout
-                        await proceedToCheckout()
-                      }}
-                      disabled={isCheckingOut}
-                      className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50"
-                    >
-                      {isCheckingOut ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          <Shield className="w-5 h-5" />
-                          Buy Now - ${125 * quantity}
-                        </>
-                      )}
-                    </button>
-                    
-                    <button 
-                      onClick={handleAddToCart}
-                      className="w-full py-3 bg-bg-white border border-border text-text-primary font-medium rounded-full hover:border-accent transition-colors flex items-center justify-center gap-2"
-                    >
-                      <ShoppingBag className="w-4 h-4" />
-                      Add to Cart
-                    </button>
-                  </div>
-
+                {/* Add to box */}
+                <div className="space-y-3">
+                  <button
+                    onClick={handleAddToCart}
+                    className="w-full py-4 bg-cta text-white font-medium rounded-full btn-primary flex items-center justify-center gap-2"
+                  >
+                    <ShoppingBag className="w-5 h-5" />
+                    {inBox ? 'Added to your box ✓' : 'Add to Your Box'}
+                  </button>
+                  <Link
+                    href="/shop"
+                    className="w-full py-3 bg-bg-white border border-border text-text-primary font-medium rounded-full hover:border-accent transition-colors flex items-center justify-center gap-2"
+                  >
+                    Go to Your Box
+                  </Link>
                   <p className="text-xs text-center text-text-muted">
-                    Each bundle covers ~1,200 sq ft • Free shipping on all orders
+                    A box holds 4 colors · ~1,200 sq ft · free shipping
                   </p>
                 </div>
               </div>

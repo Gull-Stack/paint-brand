@@ -18,7 +18,7 @@ export default function HomePage() {
   const [showToast, setShowToast] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
 
-  const { addToCart } = useCart()
+  const { addDraftColor } = useCart()
 
   // Static designer color shown on the hero room wall (interactive painter lives on /design)
   const heroColor = PAINT_COLORS.find(c => c.id === 'sage') ?? PAINT_COLORS[0]
@@ -46,9 +46,9 @@ export default function HomePage() {
   }
 
   const handleAddToCart = (color: PaintColor) => {
-    addToCart(color)
+    addDraftColor(color)
     setJustAdded(color.id)
-    setToastMessage(`${color.name} added to cart!`)
+    setToastMessage(`${color.name} added to your box`)
     setShowToast(true)
     
     // Hide toast after 3 seconds
@@ -587,10 +587,10 @@ export default function HomePage() {
                       {justAdded === modalColor.id ? (
                         <div className="flex items-center justify-center gap-2">
                           <CheckCircle className="w-4 h-4" />
-                          Added ✓
+                          Added to your box ✓
                         </div>
                       ) : (
-                        'Add Bundle - $125'
+                        'Add to Your Box'
                       )}
                     </button>
                     <button 

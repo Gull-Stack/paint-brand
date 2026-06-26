@@ -19,7 +19,8 @@ export default function ColorsPage() {
   const [styleFilter, setStyleFilter] = useState<string | null>(null)
   const [roomFilter, setRoomFilter] = useState<string | null>(null)
 
-  const { addToCart, isInCart } = useCart()
+  const { addDraftColor, draftColors } = useCart()
+  const isInCart = (colorId: string) => draftColors.some((c) => c.id === colorId)
 
   const styleFilters = [
     { id: 'nordstrom-chic', name: 'Nordstrom Chic', colors: ['soft-linen', 'greige', 'almond', 'pearl'] },
@@ -54,9 +55,9 @@ export default function ColorsPage() {
   }
 
   const handleAddToCart = (color: PaintColor) => {
-    addToCart(color)
+    addDraftColor(color)
     setJustAdded(color.id)
-    setToastMessage(`${color.name} added to cart!`)
+    setToastMessage(`${color.name} added to your box`)
     setShowToast(true)
     
     // Hide toast after 3 seconds
@@ -441,10 +442,10 @@ export default function ColorsPage() {
                       {justAdded === selectedColor.id ? (
                         <div className="flex items-center justify-center gap-2">
                           <CheckCircle className="w-4 h-4" />
-                          Added ✓
+                          Added to your box ✓
                         </div>
                       ) : (
-                        'Add Bundle - $125'
+                        'Add to Your Box'
                       )}
                     </button>
                     <button 
@@ -574,14 +575,14 @@ export default function ColorsPage() {
       {/* CTA Section */}
       <section className="py-20 bg-bg-white">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-4xl font-light text-text-primary mb-4">Ready to Transform Your Space?</h2>
+          <h2 className="text-4xl font-light text-text-primary mb-4">Ready to fill your box?</h2>
           <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
-            Choose your favorite colors and get premium paint delivered to your door for just $125
+            Pick your colors, fill a box, and we'll ship it to your door.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/shop/bundles" className="px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
-              Build Your Bundle
+            <Link href="/shop" className="px-8 py-4 bg-cta text-white font-medium rounded-full btn-primary">
+              Build Your Box
             </Link>
             <button className="px-8 py-4 bg-bg-white border border-border text-text-primary font-medium rounded-full hover:border-accent transition-colors">
               Take Color Quiz
