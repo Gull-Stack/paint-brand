@@ -29,6 +29,25 @@ exclusion zones.
 
 ## Session Log
 
+### 2026-06-25 — Dwell v2 from Malory's review (experience-first)
+- Reframed the whole homepage around the buying *experience*, away from quality/value
+  (per Malory). Hero is now "Paint Shopping. Reinvented." + "Choose your color. Order
+  online. Delivered to your door." Price removed from the homepage entirely — it only
+  appears on color detail pages + cart now (curiosity-first).
+- Moved the tap-to-paint wall visualizer OFF the homepage into its own **/design** page
+  (new `src/components/RoomDesigner.tsx`; added Design to header nav, desktop + mobile).
+  Homepage hero is now a clean statement over a sage-walled room (static `heroColor`).
+- Modern Clare-style swatches: large rounded tiles with name + family, link to detail.
+- "Why Dwell" rewritten to the experience (choose with confidence / order in minutes /
+  delivered / ready to roll). Removed the price/value comparison table.
+- Bestsellers → "Most Loved Colors", cards link to color detail (no price/add-to-cart).
+- Deployed to dwellpaint.vercel.app. OPEN: (1) real imagery still needed — testimonials
+  & gallery are placeholders, Malory wants real cans/rollers/gallons-in-box shots;
+  (2) /shop + /colors pages still need the same browsing-first rework Malory flagged;
+  (3) decide whether Anvil gets the same experience-first treatment or keeps Brad's
+  "Tough Paint. Honest Price." value angle (asked in reply).
+
+
 ### 2026-06-12 — Visualizer rebuilt, deployed to dwellpaint.vercel.app
 - Found root cause of "color clicker does nothing": the wall mask PNG had alpha=0 over
   the wall. Wrote scripts/generate-wall-mask.mjs (flood-fill + traced sofa contour) and

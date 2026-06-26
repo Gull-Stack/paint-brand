@@ -5,6 +5,7 @@ import { MessageCircle, Truck, Leaf, Shield, ChevronRight, Check, Sparkles, Arro
 import { PAINT_COLORS, CATEGORIES, type PaintColor } from '@/lib/colors'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import BuildYourBox from '@/components/BuildYourBox'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 
@@ -117,24 +118,36 @@ export default function HomePage() {
               WebkitMaskPosition: 'center',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 w-full">
-          <div className="max-w-2xl">
+        <div className="relative max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+          {/* Left — message + process */}
+          <div className="max-w-xl">
             <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-text-secondary mb-6">
-              Designer paint, delivered
+              Fill a box. We ship it.
             </span>
             <h1 className="text-5xl md:text-7xl font-light text-white mb-6 leading-[1.05] drop-shadow-lg">
               Paint Shopping.<br />
               <span className="font-medium">Reinvented.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white font-light mb-3 drop-shadow">
-              Choose your color. Order online. Delivered to your door.
+            <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow">
+              Pick any four colors, we pack them in a box, and deliver them to your door. One flat price, free shipping—the whole thing takes minutes.
             </p>
-            <p className="text-base md:text-lg text-white/85 max-w-xl mb-9 drop-shadow">
-              Browse 64 designer colors, preview them on a real room, and order in minutes. Professional-quality paint, boxed and shipped straight to you—no store run, no hassle.
-            </p>
+
+            {/* 3-step process */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-8">
+              {['Fill your box', 'We pack it', 'Delivered'].map((step, i) => (
+                <div key={step} className="flex items-center gap-2 text-white">
+                  <span className="w-7 h-7 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 flex items-center justify-center text-sm font-medium">
+                    {i + 1}
+                  </span>
+                  <span className="text-sm font-medium drop-shadow">{step}</span>
+                  {i < 2 && <ChevronRight className="w-4 h-4 text-white/50 hidden sm:block" />}
+                </div>
+              ))}
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/colors" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary font-medium rounded-full hover:bg-bg-cream transition-colors shadow-lg">
                 Browse the Colors
@@ -142,9 +155,14 @@ export default function HomePage() {
               </Link>
               <Link href="/design" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/15 backdrop-blur-sm text-white font-medium rounded-full hover:bg-white/25 transition-colors border border-white/40">
                 <Sparkles className="w-4 h-4" />
-                Design Your Room
+                See It On Your Wall
               </Link>
             </div>
+          </div>
+
+          {/* Right — interactive build-your-box */}
+          <div className="relative z-10">
+            <BuildYourBox />
           </div>
         </div>
       </section>
@@ -157,17 +175,17 @@ export default function HomePage() {
               Direct to your door
             </span>
             <h2 className="text-3xl md:text-5xl font-light text-text-primary mb-4">
-              One box. Four gallons. <span className="font-medium">One flat price.</span>
+              One box. Any four colors. <span className="font-medium">One flat price.</span>
             </h2>
             <p className="text-text-secondary text-lg">
-              Pick your color, we box up four one-gallon jugs of it, and ship it straight to your door for one flat rate. Four gallons covers about 1,200 sq ft—no store run, no contractor markup.
+              Fill a box with any four colors—all one shade or four different ones—and we ship it straight to your door for one flat rate. Four gallons covers about 1,200 sq ft, no store run required.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-4">
             {[
-              { icon: Palette, step: '01', title: 'Pick your color', text: 'Choose one shade from the 64-color collection. Your box comes with four one-gallon jugs of it.' },
-              { icon: Package, step: '02', title: 'We pack it up', text: 'Four sealed one-gallon jugs of your color, boxed and ready to ship. Enough to cover about 1,200 sq ft.' },
+              { icon: Palette, step: '01', title: 'Fill your box', text: 'Add any four colors from the 64-color collection—all one shade or a mix of four. It\'s your box.' },
+              { icon: Package, step: '02', title: 'We pack it up', text: 'Four sealed one-gallon cans, boxed and ready to ship. Enough to cover about 1,200 sq ft.' },
               { icon: Truck, step: '03', title: 'Flat-rate delivery', text: 'One flat price, shipped free to your front door. No trips, no surprises at checkout.' },
             ].map((s) => (
               <div key={s.step} className="relative bg-bg-cream rounded-2xl p-8 text-center">
